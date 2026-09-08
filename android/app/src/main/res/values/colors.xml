@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Màu chính Tuy Food -->
+    <color name="red_primary">#E8192C</color>
+    <color name="red_light">#FF4558</color>
+
+    <!-- Màu cơ bản -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <!-- Màu nền -->
+    <color name="gray_50">#F4F4F4</color>
+    <color name="gray_100">#F5F5F5</color>
+    <color name="gray_200">#E5E5E5</color>
+
+    <!-- Màu chữ -->
+    <color name="gray_400">#9CA3AF</color>
+    <color name="gray_500">#6B7280</color>
+    <color name="gray_700">#374151</color>
+    <color name="gray_900">#111827</color>
+
+</resources>
