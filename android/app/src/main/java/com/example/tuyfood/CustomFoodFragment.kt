@@ -284,9 +284,9 @@ class CustomFoodFragment : Fragment() {
 
             // Tạo FoodItem
             val customFood = FoodItem(
-                detail,
-                finalPrice,
-                emoji
+                name = detail,
+                price = finalPrice,
+                emoji = emoji
             )
 
 

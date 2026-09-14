@@ -141,9 +141,9 @@ class MenuFragment : Fragment() {
         btnAddBurger.setOnClickListener {
 
             val burger = FoodItem(
-                "Burger bò phô mai",
-                59000,
-                "🍔"
+                name = "Burger bò phô mai",
+                price = 59000,
+                emoji = "🍔"
             )
 
             CartManager.addItem(burger)
@@ -175,9 +175,9 @@ class MenuFragment : Fragment() {
         btnAddPizza.setOnClickListener {
 
             val pizza = FoodItem(
-                "Pizza Hải Sản",
-                129000,
-                "🍕"
+                name ="Pizza Hải Sản",
+                price =129000,
+                emoji ="🍕"
             )
 
             CartManager.addItem(pizza)
