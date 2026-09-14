@@ -1,17 +1,39 @@
 package com.example.tuyfood
 
+import android.app.AlertDialog
 import android.graphics.Color
+import android.graphics.Typeface
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import java.util.Locale
 
 class CartFragment : Fragment() {
+
+    private lateinit var cartContainer: LinearLayout
+    private lateinit var txtItemCount: TextView
+    private lateinit var txtSubtotal: TextView
+    private lateinit var txtOrderDiscount: TextView
+    private lateinit var txtDeliveryFee: TextView
+    private lateinit var txtShippingDiscount: TextView
+    private lateinit var txtTotal: TextView
+
+    private lateinit var edtOrderVoucher: EditText
+    private lateinit var edtShippingVoucher: EditText
+
+    private lateinit var btnClearCart: Button
+    private lateinit var btnApplyOrderVoucher: Button
+    private lateinit var btnApplyShippingVoucher: Button
+    private lateinit var btnCheckout: Button
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,188 +47,92 @@ class CartFragment : Fragment() {
             false
         )
 
-        val cartContainer =
-            view.findViewById<LinearLayout>(R.id.cartContainer)
+        cartContainer =
+            view.findViewById(R.id.cartContainer)
 
-        val txtItemCount =
-            view.findViewById<TextView>(R.id.txtItemCount)
+        txtItemCount =
+            view.findViewById(R.id.txtItemCount)
 
-        val txtSubtotal =
-            view.findViewById<TextView>(R.id.txtSubtotal)
+        txtSubtotal =
+            view.findViewById(R.id.txtSubtotal)
 
-        val txtDeliveryFee =
-            view.findViewById<TextView>(R.id.txtDeliveryFee)
+        txtOrderDiscount =
+            view.findViewById(R.id.txtOrderDiscount)
 
-        val txtTotal =
-            view.findViewById<TextView>(R.id.txtTotal)
+        txtDeliveryFee =
+            view.findViewById(R.id.txtDeliveryFee)
 
-        val btnCheckout =
-            view.findViewById<Button>(R.id.btnCheckout)
+        txtShippingDiscount =
+            view.findViewById(R.id.txtShippingDiscount)
 
-        val items = CartManager.items
+        txtTotal =
+            view.findViewById(R.id.txtTotal)
 
-        // ==============================
-        // GIỎ HÀNG TRỐNG
-        // ==============================
+        edtOrderVoucher =
+            view.findViewById(R.id.edtOrderVoucher)
 
-        if (items.isEmpty()) {
+        edtShippingVoucher =
+            view.findViewById(R.id.edtShippingVoucher)
 
-            val emptyText = TextView(requireContext())
+        btnClearCart =
+            view.findViewById(R.id.btnClearCart)
 
-            emptyText.text =
-                "🛒\n\nGiỏ hàng đang trống\n\nHãy chọn món ăn và thêm vào giỏ nhé!"
+        btnApplyOrderVoucher =
+            view.findViewById(R.id.btnApplyOrderVoucher)
 
-            emptyText.textSize = 17f
-            emptyText.setTextColor(Color.GRAY)
-            emptyText.gravity = android.view.Gravity.CENTER
-            emptyText.setPadding(20, 80, 20, 80)
+        btnApplyShippingVoucher =
+            view.findViewById(R.id.btnApplyShippingVoucher)
 
-            cartContainer.addView(emptyText)
+        btnCheckout =
+            view.findViewById(R.id.btnCheckout)
 
-            txtItemCount.text = "0 món"
-            txtSubtotal.text = "0đ"
-            txtDeliveryFee.text = "0đ"
-            txtTotal.text = "0đ"
+        btnApplyOrderVoucher.setOnClickListener {
 
-            btnCheckout.isEnabled = false
+            val result =
+                CartManager.applyOrderVoucher(
+                    edtOrderVoucher.text.toString()
+                )
 
-            return view
+            Toast.makeText(
+                requireContext(),
+                result.message,
+                Toast.LENGTH_SHORT
+            ).show()
+
+            renderCart()
         }
 
-        // ==============================
-        // HIỂN THỊ SỐ MÓN
-        // ==============================
+        btnApplyShippingVoucher.setOnClickListener {
 
-        txtItemCount.text = "${items.size} món"
-
-        // ==============================
-        // HIỂN THỊ CÁC MÓN
-        // ==============================
-
-        for (item in items) {
-
-            val itemLayout = LinearLayout(requireContext())
-
-            itemLayout.orientation =
-                LinearLayout.HORIZONTAL
-
-            itemLayout.gravity =
-                android.view.Gravity.CENTER_VERTICAL
-
-            itemLayout.setPadding(
-                16,
-                16,
-                16,
-                16
-            )
-
-            itemLayout.setBackgroundColor(
-                Color.WHITE
-            )
-
-            val emoji = TextView(requireContext())
-
-            emoji.text = item.emoji
-            emoji.textSize = 32f
-
-            val emojiParams =
-                LinearLayout.LayoutParams(
-                    55,
-                    70
+            val result =
+                CartManager.applyShippingVoucher(
+                    edtShippingVoucher.text.toString()
                 )
 
-            itemLayout.addView(
-                emoji,
-                emojiParams
-            )
+            Toast.makeText(
+                requireContext(),
+                result.message,
+                Toast.LENGTH_SHORT
+            ).show()
 
-            val infoLayout =
-                LinearLayout(requireContext())
-
-            infoLayout.orientation =
-                LinearLayout.VERTICAL
-
-            val infoParams =
-                LinearLayout.LayoutParams(
-                    0,
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    1f
-                )
-
-            val name =
-                TextView(requireContext())
-
-            name.text = item.name
-            name.textSize = 16f
-            name.setTextColor(
-                Color.rgb(35, 35, 35)
-            )
-            name.setTypeface(
-                null,
-                android.graphics.Typeface.BOLD
-            )
-
-            val price =
-                TextView(requireContext())
-
-            price.text =
-                formatMoney(item.price)
-
-            price.textSize = 14f
-            price.setTextColor(
-                Color.rgb(232, 25, 44)
-            )
-
-            infoLayout.addView(name)
-            infoLayout.addView(price)
-
-            itemLayout.addView(
-                infoLayout,
-                infoParams
-            )
-
-            cartContainer.addView(
-                itemLayout
-            )
-
-            // Khoảng cách giữa các món
-            val space =
-                View(requireContext())
-
-            cartContainer.addView(
-                space,
-                LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    8
-                )
-            )
+            renderCart()
         }
 
-        // ==============================
-        // TÍNH TIỀN
-        // ==============================
+        btnClearCart.setOnClickListener {
 
-        val subtotal =
-            CartManager.getTotal()
+            AlertDialog.Builder(requireContext())
+                .setTitle("Xóa giỏ hàng")
+                .setMessage(
+                    "Bạn có chắc muốn xóa toàn bộ món?"
+                )
+                .setNegativeButton("Không", null)
+                .setPositiveButton("Xóa") { _, _ ->
 
-        val deliveryFee =
-            20000
-
-        val total =
-            subtotal + deliveryFee
-
-        txtSubtotal.text =
-            formatMoney(subtotal)
-
-        txtDeliveryFee.text =
-            formatMoney(deliveryFee)
-
-        txtTotal.text =
-            formatMoney(total)
-
-        // ==============================
-        // NÚT ĐẶT HÀNG
-        // ==============================
+                    CartManager.clearCart()
+                    renderCart()
+                }
+                .show()
+        }
 
         btnCheckout.setOnClickListener {
 
@@ -214,10 +140,9 @@ class CartFragment : Fragment() {
                 OrderManager.createOrder()
 
             if (order == null) {
-
                 Toast.makeText(
                     requireContext(),
-                    "Giỏ hàng đang trống!",
+                    "Giỏ hàng đang trống",
                     Toast.LENGTH_SHORT
                 ).show()
 
@@ -240,7 +165,346 @@ class CartFragment : Fragment() {
                 .commit()
         }
 
+        renderCart()
+
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (::cartContainer.isInitialized) {
+            renderCart()
+        }
+    }
+
+    private fun renderCart() {
+
+        cartContainer.removeAllViews()
+
+        val items =
+            CartManager.items.toList()
+
+        val isEmpty =
+            items.isEmpty()
+
+        txtItemCount.text =
+            "${CartManager.getItemCount()} món"
+
+        btnCheckout.isEnabled = !isEmpty
+        btnClearCart.isEnabled = !isEmpty
+        btnApplyOrderVoucher.isEnabled = !isEmpty
+        btnApplyShippingVoucher.isEnabled = !isEmpty
+
+        if (isEmpty) {
+
+            val emptyText =
+                TextView(requireContext()).apply {
+
+                    text =
+                        "🛒\n\nGiỏ hàng đang trống\n" +
+                                "Hãy thêm món ăn vào giỏ!"
+
+                    textSize = 17f
+                    setTextColor(Color.GRAY)
+                    gravity = Gravity.CENTER
+                    setPadding(
+                        dp(10),
+                        dp(60),
+                        dp(10),
+                        dp(60)
+                    )
+                }
+
+            cartContainer.addView(emptyText)
+        } else {
+
+            items.forEach { item ->
+                cartContainer.addView(
+                    createItemView(item)
+                )
+            }
+        }
+
+        val subtotal =
+            CartManager.getSubtotal()
+
+        val orderDiscount =
+            CartManager.getOrderDiscount()
+
+        val deliveryFee =
+            CartManager.getDeliveryFee()
+
+        val shippingDiscount =
+            CartManager.getShippingDiscount()
+
+        val finalTotal =
+            CartManager.getFinalTotal()
+
+        txtSubtotal.text =
+            formatMoney(subtotal)
+
+        txtDeliveryFee.text =
+            formatMoney(deliveryFee)
+
+        txtTotal.text =
+            formatMoney(finalTotal)
+
+        val orderCode =
+            CartManager.appliedOrderVoucherCode
+
+        txtOrderDiscount.text =
+            if (orderCode == null) {
+                "Giảm giá đơn hàng: -0đ"
+            } else {
+                "$orderCode: -${formatMoney(orderDiscount)}"
+            }
+
+        val shippingCode =
+            CartManager.appliedShippingVoucherCode
+
+        txtShippingDiscount.text =
+            if (shippingCode == null) {
+                "Giảm phí vận chuyển: -0đ"
+            } else {
+                "$shippingCode: -${formatMoney(shippingDiscount)}"
+            }
+    }
+
+    private fun createItemView(
+        item: FoodItem
+    ): View {
+
+        val itemLayout =
+            LinearLayout(requireContext()).apply {
+
+                orientation = LinearLayout.VERTICAL
+
+                setPadding(
+                    dp(14),
+                    dp(14),
+                    dp(14),
+                    dp(14)
+                )
+
+                background =
+                    GradientDrawable().apply {
+
+                        setColor(Color.WHITE)
+                        cornerRadius =
+                            dp(12).toFloat()
+
+                        setStroke(
+                            dp(1),
+                            Color.rgb(
+                                225,
+                                225,
+                                225
+                            )
+                        )
+                    }
+
+                layoutParams =
+                    LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    ).apply {
+                        bottomMargin = dp(10)
+                    }
+            }
+
+        val topRow =
+            LinearLayout(requireContext()).apply {
+
+                orientation =
+                    LinearLayout.HORIZONTAL
+
+                gravity =
+                    Gravity.CENTER_VERTICAL
+            }
+
+        val emoji =
+            TextView(requireContext()).apply {
+
+                text = item.emoji
+                textSize = 34f
+                gravity = Gravity.CENTER
+            }
+
+        topRow.addView(
+            emoji,
+            LinearLayout.LayoutParams(
+                dp(55),
+                dp(60)
+            )
+        )
+
+        val information =
+            LinearLayout(requireContext()).apply {
+
+                orientation =
+                    LinearLayout.VERTICAL
+            }
+
+        val name =
+            TextView(requireContext()).apply {
+
+                text = item.name
+                textSize = 16f
+                setTextColor(Color.DKGRAY)
+                setTypeface(null, Typeface.BOLD)
+            }
+
+        val unitPrice =
+            TextView(requireContext()).apply {
+
+                text =
+                    "${formatMoney(item.price)} / món"
+
+                textSize = 14f
+                setTextColor(
+                    Color.rgb(232, 25, 44)
+                )
+            }
+
+        information.addView(name)
+        information.addView(unitPrice)
+
+        topRow.addView(
+            information,
+            LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                1f
+            )
+        )
+
+        val btnDelete =
+            createSmallButton("XÓA")
+
+        btnDelete.setOnClickListener {
+
+            CartManager.removeItem(item)
+
+            Toast.makeText(
+                requireContext(),
+                "Đã xóa ${item.name}",
+                Toast.LENGTH_SHORT
+            ).show()
+
+            renderCart()
+        }
+
+        topRow.addView(btnDelete)
+
+        itemLayout.addView(topRow)
+
+        val quantityRow =
+            LinearLayout(requireContext()).apply {
+
+                orientation =
+                    LinearLayout.HORIZONTAL
+
+                gravity =
+                    Gravity.CENTER_VERTICAL or
+                            Gravity.END
+            }
+
+        val btnMinus =
+            createSmallButton("−")
+
+        val txtQuantity =
+            TextView(requireContext()).apply {
+
+                text =
+                    item.quantity.toString()
+
+                textSize = 17f
+                gravity = Gravity.CENTER
+                setTypeface(null, Typeface.BOLD)
+            }
+
+        val btnPlus =
+            createSmallButton("+")
+
+        val lineTotal =
+            TextView(requireContext()).apply {
+
+                text =
+                    formatMoney(
+                        item.price *
+                                item.quantity
+                    )
+
+                textSize = 16f
+                setTextColor(
+                    Color.rgb(232, 25, 44)
+                )
+                setTypeface(null, Typeface.BOLD)
+            }
+
+        quantityRow.addView(
+            lineTotal,
+            LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                1f
+            )
+        )
+
+        quantityRow.addView(btnMinus)
+
+        quantityRow.addView(
+            txtQuantity,
+            LinearLayout.LayoutParams(
+                dp(45),
+                dp(45)
+            )
+        )
+
+        quantityRow.addView(btnPlus)
+
+        btnMinus.isEnabled =
+            item.quantity > 1
+
+        btnMinus.setOnClickListener {
+
+            CartManager.decreaseQuantity(item)
+            renderCart()
+        }
+
+        btnPlus.setOnClickListener {
+
+            CartManager.increaseQuantity(item)
+            renderCart()
+        }
+
+        itemLayout.addView(quantityRow)
+
+        return itemLayout
+    }
+
+    private fun createSmallButton(
+        label: String
+    ): Button {
+
+        return Button(requireContext()).apply {
+
+            text = label
+            textSize = 12f
+            isAllCaps = false
+
+            minWidth = 0
+            minimumWidth = 0
+            minHeight = 0
+            minimumHeight = 0
+
+            layoutParams =
+                LinearLayout.LayoutParams(
+                    dp(60),
+                    dp(45)
+                )
+        }
     }
 
     private fun formatMoney(
@@ -248,8 +512,17 @@ class CartFragment : Fragment() {
     ): String {
 
         return String.format(
+            Locale.US,
             "%,dđ",
             money
         ).replace(",", ".")
+    }
+
+    private fun dp(value: Int): Int {
+
+        return (
+                value *
+                        resources.displayMetrics.density
+                ).toInt()
     }
 }

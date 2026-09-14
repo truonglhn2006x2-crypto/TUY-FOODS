@@ -9,14 +9,34 @@ object OrderManager {
 
     fun createOrder(): Order? {
 
+        // Không tạo đơn nếu giỏ hàng trống
         if (CartManager.items.isEmpty()) {
             return null
         }
 
+        /*
+         * Sao chép danh sách món trước khi
+         * CartManager.clearCart() được gọi.
+         */
+        val orderItems =
+            CartManager.items.map { item ->
+                item.copy()
+            }
+
+        /*
+         * Lấy tổng cuối cùng:
+         * tiền món
+         * - voucher đơn hàng
+         * + phí vận chuyển
+         * - voucher vận chuyển
+         */
+        val finalTotal =
+            CartManager.getFinalTotal()
+
         val order = Order(
             orderId = nextOrderId,
-            items = CartManager.items.toList(),
-            total = CartManager.getTotal(),
+            items = orderItems,
+            total = finalTotal,
             status = 1
         )
 
@@ -24,6 +44,7 @@ object OrderManager {
 
         currentOrder = order
 
+        // Xóa giỏ và voucher sau khi đặt thành công
         CartManager.clearCart()
 
         return order
