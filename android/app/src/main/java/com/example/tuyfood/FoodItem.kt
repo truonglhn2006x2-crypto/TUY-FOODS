@@ -8,5 +8,6 @@ data class FoodItem(
     val description: String = "",
     val category: String = "",
     val rating: Double = 0.0,
-    val badge: String = ""
+    val badge: String = "",
+    var quantity: Int = 1
 )

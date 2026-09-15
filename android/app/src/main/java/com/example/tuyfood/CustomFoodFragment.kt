@@ -14,6 +14,7 @@ import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import java.util.Locale
 
 class CustomFoodFragment : Fragment() {
 
@@ -29,10 +30,7 @@ class CustomFoodFragment : Fragment() {
             false
         )
 
-        // =========================
-        // ÁNH XẠ VIEW
-        // =========================
-
+        // Ánh xạ View
         val rgFood =
             view.findViewById<RadioGroup>(R.id.rgFood)
 
@@ -44,9 +42,6 @@ class CustomFoodFragment : Fragment() {
 
         val rbPizza =
             view.findViewById<RadioButton>(R.id.rbPizza)
-
-        val rbSmall =
-            view.findViewById<RadioButton>(R.id.rbSmall)
 
         val rbMedium =
             view.findViewById<RadioButton>(R.id.rbMedium)
@@ -72,65 +67,70 @@ class CustomFoodFragment : Fragment() {
         val btnAddCustom =
             view.findViewById<Button>(R.id.btnAddCustom)
 
+        // Tính giá của một món
+        fun getUnitPrice(): Int {
 
-        // =========================
-        // TÍNH TỔNG TIỀN
-        // =========================
-
-        fun calculateTotal() {
-
-            var price = 0
-
-            // Món
-            if (rbBurger.isChecked) {
-                price += 59000
+            var price = when {
+                rbBurger.isChecked -> 59_000
+                rbPizza.isChecked -> 99_000
+                else -> 0
             }
 
-            if (rbPizza.isChecked) {
-                price += 99000
+            // Chưa chọn món thì giá bằng 0
+            if (price == 0) {
+                return 0
             }
 
-            // Size
+            // Giá theo kích thước
             if (rbMedium.isChecked) {
-                price += 10000
+                price += 10_000
+            } else if (rbLarge.isChecked) {
+                price += 20_000
             }
 
-            if (rbLarge.isChecked) {
-                price += 20000
-            }
-
-            // Topping
+            // Giá topping
             if (cbCheese.isChecked) {
-                price += 10000
+                price += 10_000
             }
 
             if (cbBacon.isChecked) {
-                price += 15000
+                price += 15_000
             }
 
             if (cbSauce.isChecked) {
-                price += 5000
+                price += 5_000
             }
 
-            // Số lượng
-            var quantity =
-                edtQuantity.text.toString().toIntOrNull() ?: 1
-
-            if (quantity < 1) {
-                quantity = 1
-            }
-
-            val total = price * quantity
-
-            txtTotal.text =
-                "Tổng tiền: ${total}đ"
+            return price
         }
 
+        // Lấy số lượng hợp lệ
+        fun getQuantity(): Int {
+            return (
+                    edtQuantity.text
+                        .toString()
+                        .toIntOrNull()
+                        ?: 1
+                    ).coerceAtLeast(1)
+        }
 
-        // =========================
-        // CẬP NHẬT GIÁ KHI CHỌN
-        // =========================
+        // Hiển thị tổng tiền
+        fun calculateTotal() {
 
+            val unitPrice =
+                getUnitPrice()
+
+            val quantity =
+                getQuantity()
+
+            val total =
+                unitPrice * quantity
+
+            txtTotal.text =
+                "Tổng tiền: ${formatMoney(total)}"
+        }
+
+        // Cập nhật khi chọn món và kích thước
         rgFood.setOnCheckedChangeListener { _, _ ->
             calculateTotal()
         }
@@ -139,6 +139,7 @@ class CustomFoodFragment : Fragment() {
             calculateTotal()
         }
 
+        // Cập nhật khi chọn topping
         cbCheese.setOnCheckedChangeListener { _, _ ->
             calculateTotal()
         }
@@ -151,16 +152,12 @@ class CustomFoodFragment : Fragment() {
             calculateTotal()
         }
 
-
-        // =========================
-        // CẬP NHẬT KHI ĐỔI SỐ LƯỢNG
-        // =========================
-
+        // Cập nhật khi nhập số lượng
         edtQuantity.addTextChangedListener(
             object : TextWatcher {
 
                 override fun beforeTextChanged(
-                    s: CharSequence?,
+                    text: CharSequence?,
                     start: Int,
                     count: Int,
                     after: Int
@@ -168,7 +165,7 @@ class CustomFoodFragment : Fragment() {
                 }
 
                 override fun onTextChanged(
-                    s: CharSequence?,
+                    text: CharSequence?,
                     start: Int,
                     before: Int,
                     count: Int
@@ -177,22 +174,19 @@ class CustomFoodFragment : Fragment() {
                 }
 
                 override fun afterTextChanged(
-                    s: Editable?
+                    text: Editable?
                 ) {
                 }
             }
         )
 
-
-        // =========================
-        // THÊM MÓN CUSTOM
-        // =========================
-
+        // Thêm món custom vào giỏ
         btnAddCustom.setOnClickListener {
 
-            // Kiểm tra món
-            if (!rbBurger.isChecked && !rbPizza.isChecked) {
-
+            if (
+                !rbBurger.isChecked &&
+                !rbPizza.isChecked
+            ) {
                 Toast.makeText(
                     requireContext(),
                     "Vui lòng chọn món ăn",
@@ -202,107 +196,65 @@ class CustomFoodFragment : Fragment() {
                 return@setOnClickListener
             }
 
-
-            // Tên món
             val foodName: String
-
-            var price: Int
-
             val emoji: String
 
             if (rbBurger.isChecked) {
-
                 foodName = "Burger Custom"
-                price = 59000
                 emoji = "🍔"
-
             } else {
-
                 foodName = "Pizza Custom"
-                price = 99000
                 emoji = "🍕"
             }
 
-
-            // Chi tiết món
             var detail = foodName
 
-
-            // Size
-            if (rbMedium.isChecked) {
-
-                price += 10000
-                detail += " - Size M"
-
-            } else if (rbLarge.isChecked) {
-
-                price += 20000
-                detail += " - Size L"
-
-            } else {
-
-                detail += " - Size S"
+            // Chi tiết kích thước
+            detail += when {
+                rbMedium.isChecked -> " - Size M"
+                rbLarge.isChecked -> " - Size L"
+                else -> " - Size S"
             }
 
-
-            // Phô mai
+            // Chi tiết topping
             if (cbCheese.isChecked) {
-
-                price += 10000
                 detail += " + Phô mai"
             }
 
-
-            // Bacon
             if (cbBacon.isChecked) {
-
-                price += 15000
                 detail += " + Bacon"
             }
 
-
-            // Sốt
             if (cbSauce.isChecked) {
-
-                price += 5000
                 detail += " + Sốt"
             }
 
-
-            // Số lượng
-            val inputQuantity =
-                edtQuantity.text.toString().toIntOrNull() ?: 1
+            val unitPrice =
+                getUnitPrice()
 
             val quantity =
-                if (inputQuantity < 1) 1 else inputQuantity
+                getQuantity()
 
-
-            // Tổng tiền
-            val finalPrice =
-                price * quantity
-
-
-            // Tạo FoodItem
+            /*
+             * Quan trọng:
+             * price chỉ là giá của một món.
+             * quantity được lưu riêng.
+             */
             val customFood = FoodItem(
                 name = detail,
-                price = finalPrice,
-                emoji = emoji
+                price = unitPrice,
+                emoji = emoji,
+                quantity = quantity
             )
 
-
-            // Thêm vào CartManager
             CartManager.addItem(customFood)
 
-
-            // Thông báo
             Toast.makeText(
                 requireContext(),
-                "Đã thêm món custom vào giỏ hàng",
+                "Đã thêm $quantity món vào giỏ hàng",
                 Toast.LENGTH_SHORT
             ).show()
 
-
-            // Chuyển sang giỏ hàng
             parentFragmentManager
                 .beginTransaction()
                 .replace(
@@ -313,14 +265,16 @@ class CustomFoodFragment : Fragment() {
                 .commit()
         }
 
-
-        // =========================
-        // TÍNH GIÁ BAN ĐẦU
-        // =========================
-
         calculateTotal()
 
-
         return view
+    }
+
+    private fun formatMoney(money: Int): String {
+        return String.format(
+            Locale.US,
+            "%,dđ",
+            money
+        ).replace(",", ".")
     }
 }
