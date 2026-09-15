@@ -2,62 +2,108 @@ package com.example.tuyfood
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(
+        savedInstanceState: Bundle?
+    ) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        val prefs = getSharedPreferences("TuyFoods", 0)
-        val userId = prefs.getLong("userId", -1)
+        setContentView(
+            R.layout.activity_main
+        )
+
+        val preferences =
+            getSharedPreferences(
+                "TuyFoods",
+                MODE_PRIVATE
+            )
+
+        val userId =
+            preferences.getLong(
+                "userId",
+                -1L
+            )
 
         if (savedInstanceState == null) {
+
             if (userId != -1L) {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainer, HomeFragment())
-                    .commit()
+                openFragment(
+                    HomeFragment()
+                )
             } else {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainer, LoginFragment())
-                    .commit()
+                openFragment(
+                    LoginFragment()
+                )
             }
         }
 
-        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
-        bottomNav.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.nav_home -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragmentContainer, HomeFragment())
-                        .commit()
-                    true
+        val bottomNavigation =
+            findViewById<BottomNavigationView>(
+                R.id.bottomNav
+            )
+
+        bottomNavigation
+            .setOnItemSelectedListener { item ->
+
+                when (item.itemId) {
+
+                    R.id.nav_home -> {
+                        openFragment(
+                            HomeFragment()
+                        )
+                        true
+                    }
+
+                    R.id.nav_menu -> {
+                        openFragment(
+                            MenuFragment()
+                        )
+                        true
+                    }
+
+                    R.id.nav_orders -> {
+                        openFragment(
+                            OrderTrackingFragment()
+                        )
+                        true
+                    }
+
+                    R.id.nav_account -> {
+                        openFragment(
+                            LoginFragment()
+                        )
+                        true
+                    }
+
+                    R.id.nav_minigame -> {
+                        /*
+                         * Mở màn hình mini game
+                         * mở hòm phần thưởng.
+                         */
+                        openFragment(
+                            MysteryBoxFragment()
+                        )
+                        true
+                    }
+
+                    else -> false
                 }
-                R.id.nav_menu -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragmentContainer, MenuFragment())
-                        .commit()
-                    true
-                }
-                R.id.nav_orders -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragmentContainer, OrderTrackingFragment())
-                        .commit()
-                    true
-                }
-                R.id.nav_account -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragmentContainer, LoginFragment())
-                        .commit()
-                    true
-                }
-                R.id.nav_minigame -> {
-                    // Đang Phát triển
-                    true
-                }
-                else -> false
             }
-        }
+    }
+
+    private fun openFragment(
+        fragment: Fragment
+    ) {
+        supportFragmentManager
+            .beginTransaction()
+            .replace(
+                R.id.fragmentContainer,
+                fragment
+            )
+            .commit()
     }
 }
