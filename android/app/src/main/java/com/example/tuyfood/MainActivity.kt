@@ -89,7 +89,9 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     R.id.nav_minigame -> {
-                        // Đang phát triển
+                        openFragment(
+                            MysteryBoxFragment()
+                        )
                         true
                     }
 

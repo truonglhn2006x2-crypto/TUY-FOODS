@@ -16,6 +16,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import java.util.Locale
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 
 class CartFragment : Fragment() {
 
@@ -135,34 +137,54 @@ class CartFragment : Fragment() {
         }
 
         btnCheckout.setOnClickListener {
-
-            val order =
-                OrderManager.createOrder()
-
-            if (order == null) {
-                Toast.makeText(
-                    requireContext(),
-                    "Giỏ hàng đang trống",
-                    Toast.LENGTH_SHORT
-                ).show()
-
+            if (CartManager.items.isEmpty()) {
+                Toast.makeText(requireContext(), "Giỏ hàng đang trống", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            Toast.makeText(
-                requireContext(),
-                "Đặt hàng thành công! Mã đơn #${order.orderId}",
-                Toast.LENGTH_SHORT
-            ).show()
+            val prefs = requireContext().getSharedPreferences("TuyFoods", 0)
+            val userId = prefs.getLong("userId", -1L)
 
-            parentFragmentManager
-                .beginTransaction()
-                .replace(
-                    R.id.fragmentContainer,
-                    OrderTrackingFragment()
-                )
-                .addToBackStack(null)
-                .commit()
+            if (userId == -1L) {
+                Toast.makeText(requireContext(), "Vui lòng đăng nhập!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            lifecycleScope.launch {
+                try {
+                    val orderItems = CartManager.items.map {
+                        OrderItemRequest(
+                            productId = it.id.toLong(),
+                            quantity = it.quantity
+                        )
+                    }
+
+                    val response = RetrofitClient.instance.createOrder(
+                        OrderRequest(
+                            userId = userId,
+                            deliveryAddress = "Địa chỉ mặc định",
+                            phone = "",
+                            items = orderItems
+                        )
+                    )
+
+                    OrderManager.createOrder()
+
+                    Toast.makeText(
+                        requireContext(),
+                        "Đặt hàng thành công! Mã đơn #${response.orderId}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.fragmentContainer, OrderTrackingFragment())
+                        .addToBackStack(null)
+                        .commit()
+
+                } catch (e: Exception) {
+                    Toast.makeText(requireContext(), "Lỗi kết nối server!", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
 
         renderCart()
