@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F6F7F9">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="30dp">
+
+        <!-- HEADER -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:gravity="center_vertical"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:background="#FFFFFF">
+
+            <TextView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:gravity="center"
+                android:text="‹"
+                android:textColor="#222222"
+                android:textSize="34sp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Theo dõi đơn hàng"
+                android:textColor="#181818"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:gravity="center"
+                android:text="⋮"
+                android:textColor="#222222"
+                android:textSize="26sp"/>
+
+        </LinearLayout>
+
+
+        <!-- ORDER HEADER -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:background="#FFFFFF">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Đơn hàng"
+                        android:textColor="#888888"
+                        android:textSize="13sp"/>
+
+                    <TextView
+                        android:id="@+id/txtOrderId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:text="#1001"
+                        android:textColor="#181818"
+                        android:textSize="21sp"
+                        android:textStyle="bold"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txtCurrentStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#FFF0F2"
+                    android:paddingStart="12dp"
+                    android:paddingTop="7dp"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="7dp"
+                    android:text="Đang chuẩn bị"
+                    android:textColor="#E8192C"
+                    android:textSize="13sp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <!-- FOOD CARD -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:background="#FFFFFF">
+
+            <TextView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:gravity="center"
+                android:text="🍔"
+                android:textSize="36sp"
+                android:background="#FFF5F5"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="14dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Burger Custom"
+                    android:textColor="#181818"
+                    android:textSize="17sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Size M • Phô mai"
+                    android:textColor="#777777"
+                    android:textSize="13sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="x2"
+                    android:textColor="#999999"
+                    android:textSize="13sp"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="158.000đ"
+                android:textColor="#181818"
+                android:textSize="15sp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+
+        <!-- STATUS TITLE -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="28dp"
+            android:text="Trạng thái đơn hàng"
+            android:textColor="#181818"
+            android:textSize="19sp"
+            android:textStyle="bold"/>
+
+
+        <!-- STATUS TIMELINE -->
+
+        <LinearLayout
+            android:id="@+id/statusTimeline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="vertical">
+
+            <!-- STEP 1 -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/iconStep1"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:gravity="center"
+                    android:text="✓"
+                    android:textColor="#FFFFFF"
+                    android:textSize="17sp"
+                    android:background="#E8192C"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="14dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Đã đặt hàng"
+                        android:textColor="#222222"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:text="Đơn hàng đã được gửi"
+                        android:textColor="#888888"
+                        android:textSize="13sp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <!-- STEP 2 -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/iconStep2"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:gravity="center"
+                    android:text="✓"
+                    android:textColor="#FFFFFF"
+                    android:textSize="17sp"
+                    android:background="#E8192C"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="14dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nhà hàng đã xác nhận"
+                        android:textColor="#222222"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:text="Nhà hàng đã nhận đơn"
+                        android:textColor="#888888"
+                        android:textSize="13sp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <!-- STEP 3 -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/iconStep3"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:gravity="center"
+                    android:text="●"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:background="#E8192C"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="14dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Đang chuẩn bị món"
+                        android:textColor="#222222"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:text="Đầu bếp đang chuẩn bị món"
+                        android:textColor="#888888"
+                        android:textSize="13sp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <!-- STEP 4 -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/iconStep4"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:gravity="center"
+                    android:text="○"
+                    android:textColor="#999999"
+                    android:textSize="20sp"
+                    android:background="#E5E5E5"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="14dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tài xế đang giao"
+                        android:textColor="#999999"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:text="Tài xế sẽ giao hàng đến bạn"
+                        android:textColor="#AAAAAA"
+                        android:textSize="13sp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <!-- STEP 5 -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/iconStep5"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:gravity="center"
+                    android:text="○"
+                    android:textColor="#999999"
+                    android:textSize="20sp"
+                    android:background="#E5E5E5"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="14dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Đã giao"
+                        android:textColor="#999999"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:text="Đơn hàng đã giao thành công"
+                        android:textColor="#AAAAAA"
+                        android:textSize="13sp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <!-- DELIVERY INFO -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="horizontal"
+            android:padding="18dp"
+            android:background="#FFFFFF">
+
+            <TextView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:gravity="center"
+                android:text="🚴"
+                android:textSize="27sp"
+                android:background="#FFF5F5"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="14dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thời gian giao dự kiến"
+                    android:textColor="#777777"
+                    android:textSize="13sp"/>
+
+                <TextView
+                    android:id="@+id/txtEstimatedTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="15 - 20 phút"
+                    android:textColor="#181818"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <!-- DEMO BUTTON -->
+
+        <Button
+            android:id="@+id/btnNextStatus"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="16dp"
+            android:text="CẬP NHẬT TRẠNG THÁI"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+</ScrollView>

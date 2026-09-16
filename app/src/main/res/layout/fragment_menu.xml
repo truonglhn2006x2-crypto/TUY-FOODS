@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/gray_100">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:background="@color/red_primary">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Thực đơn"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <!-- Danh mục -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp">
+
+            <Button
+                android:id="@+id/btnAll"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_marginEnd="8dp"
+                android:text="Tất cả"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/btnGrill"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_marginEnd="8dp"
+                android:text="Nướng &amp; Xiên"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/btnFried"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_marginEnd="8dp"
+                android:text="Chiên &amp; Rán"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/btnSpicy"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_marginEnd="8dp"
+                android:text="Trộn &amp; Cay"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/btnStarch"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_marginEnd="8dp"
+                android:text="Món no"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/btnSmoothie"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_marginEnd="8dp"
+                android:text="Sinh tố"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/btnTea"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:text="Trà &amp; Đá xay"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+    <!-- Tiêu đề danh mục -->
+    <TextView
+        android:id="@+id/txtCategoryTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="16dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp"
+        android:text="Tất cả món ăn"
+        android:textColor="@color/gray_900"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <!-- Danh sách món ăn -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerFood"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:clipToPadding="false" />
+
+</LinearLayout>
