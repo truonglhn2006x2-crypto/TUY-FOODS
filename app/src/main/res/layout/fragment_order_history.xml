@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F7F7F7"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="📦 Lịch sử đơn hàng"
+        android:textColor="#222222"
+        android:textSize="24sp"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/edtSearchOrder"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="12dp"
+        android:hint="Tìm mã đơn hoặc tên món"
+        android:inputType="text"
+        android:singleLine="true"/>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnFilterAll"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:text="Tất cả"
+                android:textAllCaps="false"/>
+
+            <Button
+                android:id="@+id/btnFilterProcessing"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:text="Đang xử lý"
+                android:textAllCaps="false"/>
+
+            <Button
+                android:id="@+id/btnFilterDelivering"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:text="Đang giao"
+                android:textAllCaps="false"/>
+
+            <Button
+                android:id="@+id/btnFilterCompleted"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:text="Hoàn thành"
+                android:textAllCaps="false"/>
+
+            <Button
+                android:id="@+id/btnFilterCancelled"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:text="Đã hủy"
+                android:textAllCaps="false"/>
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="12dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:id="@+id/orderHistoryContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
+
+    </ScrollView>
+
+</LinearLayout>
