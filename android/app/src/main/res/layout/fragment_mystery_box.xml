@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0F1420"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="18dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🎁 TUY-FOODS CASE"
+            android:textColor="#FFFFFF"
+            android:textSize="27sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Mở hòm để nhận voucher"
+            android:textColor="#AAB2C0"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/txtKeyAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="🔑 Chìa khóa: 3"
+            android:textColor="#F1C40F"
+            android:textSize="19sp"
+            android:textStyle="bold"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="155dp"
+            android:layout_marginTop="22dp"
+            android:background="#181F2D">
+
+            <HorizontalScrollView
+                android:id="@+id/rewardScroll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/rewardTrack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"/>
+
+            </HorizontalScrollView>
+
+            <!-- Kim chỉ phần thưởng -->
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="#F1C40F"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|center_horizontal"
+                android:text="▼"
+                android:textColor="#F1C40F"
+                android:textSize="22sp"/>
+
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/btnOpenCase"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:layout_marginTop="22dp"
+            android:backgroundTint="#E8192C"
+            android:text="🔑 MỞ HÒM"
+            android:textColor="#FFFFFF"
+            android:textSize="17sp"
+            android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/btnAddDemoKey"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="#34495E"
+            android:text="+ 1 CHÌA KHÓA DEMO"
+            android:textColor="#FFFFFF"/>
+
+        <TextView
+            android:id="@+id/txtRewardResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="Nhấn MỞ HÒM để bắt đầu"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="🎒 KHO PHẦN THƯỞNG"
+            android:textColor="#FFFFFF"
+            android:textSize="19sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/txtRewardInventory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="#181F2D"
+            android:padding="16dp"
+            android:text="Bạn chưa có phần thưởng nào."
+            android:textColor="#DCE1E8"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="Tỷ lệ: 100 điểm 35% • Không trúng 25% • Giảm 10% 20% • Giảm 20K 12% • FREESHIP 7% • Món miễn phí 1%"
+            android:textColor="#8993A4"
+            android:textSize="12sp"/>
+
+    </LinearLayout>
+
+</ScrollView>
