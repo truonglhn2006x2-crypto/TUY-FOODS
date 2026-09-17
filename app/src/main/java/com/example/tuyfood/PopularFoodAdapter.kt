@@ -13,7 +13,6 @@ class PopularFoodAdapter(
 ) : RecyclerView.Adapter<PopularFoodAdapter.PopularViewHolder>() {
 
     class PopularViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
         val imgFood: ImageView = view.findViewById(R.id.imgFood)
         val txtBadge: TextView = view.findViewById(R.id.txtBadge)
         val txtName: TextView = view.findViewById(R.id.txtName)
@@ -27,14 +26,12 @@ class PopularFoodAdapter(
         parent: ViewGroup,
         viewType: Int
     ): PopularViewHolder {
-
         val view = LayoutInflater.from(parent.context)
             .inflate(
                 R.layout.item_popular_food,
                 parent,
                 false
             )
-
         return PopularViewHolder(view)
     }
 
@@ -42,13 +39,11 @@ class PopularFoodAdapter(
         holder: PopularViewHolder,
         position: Int
     ) {
-
         val food = items[position]
 
         // =========================
         // ẢNH MÓN ĂN
         // =========================
-
         if (food.imageRes != 0) {
             holder.imgFood.setImageResource(food.imageRes)
         }
@@ -56,40 +51,24 @@ class PopularFoodAdapter(
         // =========================
         // THÔNG TIN MÓN
         // =========================
-
         holder.txtName.text = food.name
-
-        holder.txtDescription.text =
-            food.description
-
-        holder.txtPrice.text =
-            "${"%,d".format(food.price)}đ"
-
-        holder.txtRating.text =
-            "⭐ ${food.rating}"
+        holder.txtDescription.text = food.description
+        holder.txtPrice.text = "${"%,d".format(food.price)}đ"
+        holder.txtRating.text = "⭐ ${food.rating}"
 
         // =========================
         // BADGE
         // =========================
-
         if (food.badge.isNotEmpty()) {
-
-            holder.txtBadge.visibility =
-                View.VISIBLE
-
-            holder.txtBadge.text =
-                food.badge
-
+            holder.txtBadge.visibility = View.VISIBLE
+            holder.txtBadge.text = food.badge
         } else {
-
-            holder.txtBadge.visibility =
-                View.GONE
+            holder.txtBadge.visibility = View.GONE
         }
 
         // =========================
         // NÚT +
         // =========================
-
         holder.btnAdd.setOnClickListener {
             onAddClick(food)
         }

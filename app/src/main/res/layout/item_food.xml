@@ -1,75 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
     android:orientation="horizontal"
-    android:padding="10dp"
-    android:gravity="center_vertical"
-    android:background="@drawable/bg_card_white">
+    android:padding="12dp"
+    android:layout_marginBottom="10dp"
+    android:background="#FFFFFF"
+    android:elevation="2dp"
+    android:gravity="center_vertical">
 
-    <!-- Ảnh món ăn -->
     <ImageView
         android:id="@+id/imgFood"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:scaleType="centerCrop"
-        android:contentDescription="Food image" />
+        android:src="@drawable/ic_launcher_background"
+        android:contentDescription="@null" />
 
-    <!-- Thông tin món -->
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical"
         android:paddingStart="12dp"
-        android:paddingEnd="8dp">
+        android:paddingEnd="12dp">
 
         <TextView
             android:id="@+id/txtName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/gray_900"
+            android:text="Tên món ăn"
+            android:textColor="#222222"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:maxLines="1"
-            android:ellipsize="end" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:textColor="@color/gray_500"
-            android:textSize="12sp"
-            android:maxLines="2"
-            android:ellipsize="end" />
+            android:text="Mô tả món ăn"
+            android:textColor="#777777"
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/txtPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:textColor="@color/red_primary"
+            android:layout_marginTop="4dp"
+            android:text="0đ"
+            android:textColor="#E8192C"
             android:textSize="15sp"
             android:textStyle="bold" />
 
     </LinearLayout>
 
-    <!-- Nút thêm -->
     <Button
         android:id="@+id/btnAdd"
-        android:layout_width="42dp"
-        android:layout_height="42dp"
-        android:layout_gravity="center_vertical"
-        android:minWidth="0dp"
-        android:minHeight="0dp"
-        android:padding="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="+"
-        android:textSize="20sp"
-        android:textColor="@color/white"
-        android:background="@drawable/bg_circle_red" />
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
 </LinearLayout>

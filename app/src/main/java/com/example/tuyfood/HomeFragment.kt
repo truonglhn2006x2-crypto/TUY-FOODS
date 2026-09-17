@@ -26,19 +26,12 @@ class HomeFragment : Fragment() {
             false
         )
 
-        // =========================
-        // SEARCH
-        // =========================
-
+        // SEARCH BAR -> mở Menu
         view.findViewById<View>(R.id.searchBar).setOnClickListener {
             openMenu(null)
         }
 
-
-        // =========================
-        // CART
-        // =========================
-
+        // CART ICON -> mở giỏ hàng
         view.findViewById<View>(R.id.btnCartIcon).setOnClickListener {
             parentFragmentManager
                 .beginTransaction()
@@ -47,11 +40,7 @@ class HomeFragment : Fragment() {
                 .commit()
         }
 
-
-        // =========================
         // DANH MỤC
-        // =========================
-
         // Món nướng & Xiên que
         view.findViewById<View>(R.id.btnGrill).setOnClickListener {
             openMenu(FoodData.CAT_NUONG)
@@ -87,20 +76,11 @@ class HomeFragment : Fragment() {
             openMenu(null)
         }
 
-
-        // =========================
-        // XEM TẤT CẢ MÓN
-        // =========================
-
         view.findViewById<View>(R.id.btnMenu).setOnClickListener {
             openMenu(null)
         }
 
-
-        // =========================
         // CHAT
-        // =========================
-
         view.findViewById<View>(R.id.fabChat).setOnClickListener {
             parentFragmentManager
                 .beginTransaction()
@@ -112,64 +92,33 @@ class HomeFragment : Fragment() {
                 .commit()
         }
 
-
-        // =========================
-        // BẢNG XẾP HẠNG BÁN CHẠY
-        // =========================
-
-        val recyclerPopular =
-            view.findViewById<RecyclerView>(R.id.recyclerPopular)
-
-        recyclerPopular.layoutManager =
-            LinearLayoutManager(requireContext())
-
-        recyclerPopular.adapter =
-            PopularFoodAdapter(popularFoods) { food ->
-                onAddToCart(food)
-            }
-
+        // MÓN PHỔ BIẾN
+        val recyclerPopular = view.findViewById<RecyclerView>(R.id.recyclerPopular)
+        recyclerPopular.layoutManager = LinearLayoutManager(requireContext())
+        recyclerPopular.adapter = PopularFoodAdapter(popularFoods) { food ->
+            onAddToCart(food)
+        }
 
         return view
     }
 
-
-    // =========================
-    // MỞ MENU
-    // =========================
-
     private fun openMenu(category: String?) {
-
         val menuFragment = MenuFragment()
 
         if (category != null) {
-
             val bundle = Bundle()
-
-            bundle.putString(
-                "category",
-                category
-            )
-
+            bundle.putString("category", category)
             menuFragment.arguments = bundle
         }
 
         parentFragmentManager
             .beginTransaction()
-            .replace(
-                R.id.fragmentContainer,
-                menuFragment
-            )
+            .replace(R.id.fragmentContainer, menuFragment)
             .addToBackStack(null)
             .commit()
     }
 
-
-    // =========================
-    // THÊM VÀO GIỎ HÀNG
-    // =========================
-
     private fun onAddToCart(food: FoodItem) {
-
         CartManager.addItem(food)
 
         Toast.makeText(

@@ -36,7 +36,7 @@
             android:paddingEnd="6dp"
             android:paddingTop="2dp"
             android:paddingBottom="2dp"
-            android:textColor="@color/white"
+            android:textColor="@android:color/white"
             android:textSize="9sp"
             android:textStyle="bold"
             tools:text="Bán chạy" />
@@ -58,7 +58,7 @@
             android:id="@+id/txtName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/gray_900"
+            android:textColor="#212121"
             android:textSize="15sp"
             android:textStyle="bold"
             android:maxLines="1"
@@ -71,7 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:textColor="@color/gray_500"
+            android:textColor="#757575"
             android:textSize="12sp"
             android:maxLines="1"
             android:ellipsize="end"
@@ -83,7 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:textColor="@color/gray_700"
+            android:textColor="#616161"
             android:textSize="12sp"
             tools:text="⭐ 4.7" />
 
@@ -93,7 +93,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:textColor="@color/red_primary"
+            android:textColor="#E8192C"
             android:textSize="15sp"
             android:textStyle="bold"
             tools:text="45.000đ" />
@@ -110,7 +110,7 @@
         android:background="@drawable/bg_circle_red"
         android:gravity="center"
         android:text="+"
-        android:textColor="@color/white"
+        android:textColor="@android:color/white"
         android:textSize="20sp"
         android:textStyle="bold" />
 

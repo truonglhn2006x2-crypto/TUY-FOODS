@@ -14,35 +14,23 @@ class FoodAdapter(
 ) : RecyclerView.Adapter<FoodAdapter.FoodViewHolder>() {
 
     class FoodViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
-        val imgFood: ImageView =
-            view.findViewById(R.id.imgFood)
-
-        val txtName: TextView =
-            view.findViewById(R.id.txtName)
-
-        val txtDescription: TextView =
-            view.findViewById(R.id.txtDescription)
-
-        val txtPrice: TextView =
-            view.findViewById(R.id.txtPrice)
-
-        val btnAdd: Button =
-            view.findViewById(R.id.btnAdd)
+        val imgFood: ImageView = view.findViewById(R.id.imgFood)
+        val txtName: TextView = view.findViewById(R.id.txtName)
+        val txtDescription: TextView = view.findViewById(R.id.txtDescription)
+        val txtPrice: TextView = view.findViewById(R.id.txtPrice)
+        val btnAdd: Button = view.findViewById(R.id.btnAdd)
     }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): FoodViewHolder {
-
         val view = LayoutInflater.from(parent.context)
             .inflate(
                 R.layout.item_food,
                 parent,
                 false
             )
-
         return FoodViewHolder(view)
     }
 
@@ -50,7 +38,6 @@ class FoodAdapter(
         holder: FoodViewHolder,
         position: Int
     ) {
-
         val food = items[position]
 
         // ẢNH MÓN ĂN
@@ -62,12 +49,10 @@ class FoodAdapter(
         holder.txtName.text = food.name
 
         // MÔ TẢ
-        holder.txtDescription.text =
-            food.description
+        holder.txtDescription.text = food.description
 
         // GIÁ
-        holder.txtPrice.text =
-            "${"%,d".format(food.price)}đ"
+        holder.txtPrice.text = "${"%,d".format(food.price)}đ"
 
         // THÊM VÀO GIỎ
         holder.btnAdd.setOnClickListener {
@@ -75,12 +60,9 @@ class FoodAdapter(
         }
     }
 
-    override fun getItemCount(): Int =
-        items.size
+    override fun getItemCount(): Int = items.size
 
-    fun updateData(
-        newItems: List<FoodItem>
-    ) {
+    fun updateData(newItems: List<FoodItem>) {
         items = newItems
         notifyDataSetChanged()
     }

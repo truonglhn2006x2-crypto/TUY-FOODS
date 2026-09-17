@@ -7,18 +7,12 @@
     android:layout_height="match_parent"
     android:background="#F7F7F7">
 
-    <!-- ========================= -->
-    <!-- NỘI DUNG HOME -->
-    <!-- ========================= -->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!-- ========================= -->
         <!-- HEADER -->
-        <!-- ========================= -->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,8 +23,6 @@
             android:paddingEnd="16dp"
             android:paddingTop="14dp"
             android:paddingBottom="12dp">
-
-            <!-- Xin chào + giỏ hàng -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -57,8 +49,6 @@
 
             </LinearLayout>
 
-            <!-- Địa chỉ -->
-
             <TextView
                 android:id="@+id/txtAddress"
                 android:layout_width="match_parent"
@@ -67,8 +57,6 @@
                 android:text="📍 Giao đến: 45 Lê Lợi, Phường 4, TP. Tuy Hòa  ▾"
                 android:textColor="#FFE8EA"
                 android:textSize="12sp" />
-
-            <!-- Search -->
 
             <LinearLayout
                 android:id="@+id/searchBar"
@@ -99,10 +87,7 @@
 
         </LinearLayout>
 
-
-        <!-- ========================= -->
         <!-- SCROLL CONTENT -->
-        <!-- ========================= -->
 
         <ScrollView
             android:layout_width="match_parent"
@@ -120,17 +105,12 @@
                 android:paddingTop="14dp"
                 android:paddingBottom="80dp">
 
-
-                <!-- ========================= -->
-                <!-- BANNER CHẠY 3 ẢNH -->
-                <!-- ========================= -->
+                <!-- BANNER 3 ẢNH CHẠY -->
 
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
                     android:background="@drawable/bg_banner">
-
-                    <!-- ẢNH CHẠY -->
 
                     <ViewFlipper
                         android:id="@+id/bannerFlipper"
@@ -141,8 +121,6 @@
                         android:inAnimation="@android:anim/fade_in"
                         android:outAnimation="@android:anim/fade_out">
 
-                        <!-- Ảnh 1 -->
-
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -150,16 +128,12 @@
                             android:scaleType="centerCrop"
                             android:contentDescription="Chân gà sốt Thái" />
 
-                        <!-- Ảnh 2 -->
-
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:src="@drawable/bo_nuong_la_lot"
                             android:scaleType="centerCrop"
                             android:contentDescription="Bò nướng lá lốt" />
-
-                        <!-- Ảnh 3 -->
 
                         <ImageView
                             android:layout_width="match_parent"
@@ -170,16 +144,10 @@
 
                     </ViewFlipper>
 
-
-                    <!-- Lớp tối -->
-
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="#55000000" />
-
-
-                    <!-- Nội dung Banner -->
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -217,10 +185,7 @@
 
                 </FrameLayout>
 
-
-                <!-- ========================= -->
                 <!-- DANH MỤC -->
-                <!-- ========================= -->
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -248,7 +213,6 @@
 
                 </LinearLayout>
 
-
                 <!-- HÀNG 1 -->
 
                 <LinearLayout
@@ -256,8 +220,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:orientation="horizontal">
-
-                    <!-- Nướng -->
 
                     <LinearLayout
                         android:id="@+id/btnGrill"
@@ -288,9 +250,6 @@
 
                     </LinearLayout>
 
-
-                    <!-- Chiên -->
-
                     <LinearLayout
                         android:id="@+id/btnFried"
                         android:layout_width="0dp"
@@ -319,9 +278,6 @@
                             android:textAlignment="center" />
 
                     </LinearLayout>
-
-
-                    <!-- Trộn -->
 
                     <LinearLayout
                         android:id="@+id/btnSpicy"
@@ -354,7 +310,6 @@
 
                 </LinearLayout>
 
-
                 <!-- HÀNG 2 -->
 
                 <LinearLayout
@@ -362,8 +317,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
                     android:orientation="horizontal">
-
-                    <!-- Tinh bột -->
 
                     <LinearLayout
                         android:id="@+id/btnStarch"
@@ -394,9 +347,6 @@
 
                     </LinearLayout>
 
-
-                    <!-- Sinh tố -->
-
                     <LinearLayout
                         android:id="@+id/btnSmoothie"
                         android:layout_width="0dp"
@@ -425,9 +375,6 @@
                             android:textAlignment="center" />
 
                     </LinearLayout>
-
-
-                    <!-- Trà -->
 
                     <LinearLayout
                         android:id="@+id/btnTea"
@@ -460,10 +407,7 @@
 
                 </LinearLayout>
 
-
-                <!-- ========================= -->
                 <!-- BẢNG XẾP HẠNG -->
-                <!-- ========================= -->
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -492,9 +436,6 @@
 
                 </LinearLayout>
 
-
-                <!-- DANH SÁCH MÓN -->
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerPopular"
                     android:layout_width="match_parent"
@@ -509,10 +450,7 @@
 
     </LinearLayout>
 
-
-    <!-- ========================= -->
     <!-- NÚT CHAT -->
-    <!-- ========================= -->
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabChat"
