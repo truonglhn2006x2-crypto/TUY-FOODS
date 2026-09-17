@@ -11,11 +11,15 @@
     android:background="@drawable/bg_card_white"
     android:elevation="2dp">
 
+<<<<<<< HEAD
     <!-- ẢNH MÓN ĂN -->
+=======
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
     <FrameLayout
         android:layout_width="72dp"
         android:layout_height="72dp">
 
+<<<<<<< HEAD
         <ImageView
             android:id="@+id/imgFood"
             android:layout_width="72dp"
@@ -26,6 +30,17 @@
             tools:src="@drawable/chan_ga_sot_thai" />
 
         <!-- BADGE -->
+=======
+        <TextView
+            android:id="@+id/txtEmoji"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:background="@drawable/bg_category_icon"
+            android:gravity="center"
+            android:textSize="34sp"
+            tools:text="🍔" />
+
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
         <TextView
             android:id="@+id/txtBadge"
             android:layout_width="wrap_content"
@@ -39,12 +54,19 @@
             android:textColor="@color/white"
             android:textSize="9sp"
             android:textStyle="bold"
+<<<<<<< HEAD
             tools:text="Bán chạy" />
 
     </FrameLayout>
 
 
     <!-- THÔNG TIN MÓN ĂN -->
+=======
+            tools:text="HOT" />
+
+    </FrameLayout>
+
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -53,7 +75,10 @@
         android:paddingStart="12dp"
         android:gravity="center_vertical">
 
+<<<<<<< HEAD
         <!-- TÊN -->
+=======
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
         <TextView
             android:id="@+id/txtName"
             android:layout_width="match_parent"
@@ -63,9 +88,14 @@
             android:textStyle="bold"
             android:maxLines="1"
             android:ellipsize="end"
+<<<<<<< HEAD
             tools:text="Chân gà sốt Thái" />
 
         <!-- MÔ TẢ -->
+=======
+            tools:text="Burger Bò Đặc Biệt" />
+
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
         <TextView
             android:id="@+id/txtDescription"
             android:layout_width="match_parent"
@@ -75,9 +105,14 @@
             android:textSize="12sp"
             android:maxLines="1"
             android:ellipsize="end"
+<<<<<<< HEAD
             tools:text="Chua cay đậm vị kiểu Thái" />
 
         <!-- ĐÁNH GIÁ -->
+=======
+            tools:text="Burger bò 150g juicy, phô mai cheddar..." />
+
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
         <TextView
             android:id="@+id/txtRating"
             android:layout_width="wrap_content"
@@ -85,9 +120,14 @@
             android:layout_marginTop="4dp"
             android:textColor="@color/gray_700"
             android:textSize="12sp"
+<<<<<<< HEAD
             tools:text="⭐ 4.7" />
 
         <!-- GIÁ -->
+=======
+            tools:text="⭐ 4.8" />
+
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
         <TextView
             android:id="@+id/txtPrice"
             android:layout_width="match_parent"
@@ -96,12 +136,19 @@
             android:textColor="@color/red_primary"
             android:textSize="15sp"
             android:textStyle="bold"
+<<<<<<< HEAD
             tools:text="45.000đ" />
 
     </LinearLayout>
 
 
     <!-- NÚT THÊM -->
+=======
+            tools:text="89.000đ" />
+
+    </LinearLayout>
+
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
     <TextView
         android:id="@+id/btnAdd"
         android:layout_width="34dp"

@@ -11,14 +11,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+<<<<<<< HEAD
 import android.widget.ImageView
+=======
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+<<<<<<< HEAD
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import java.util.Locale
+=======
+import java.util.Locale
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
 
 class CartFragment : Fragment() {
 
@@ -50,6 +59,7 @@ class CartFragment : Fragment() {
             false
         )
 
+<<<<<<< HEAD
         cartContainer = view.findViewById(R.id.cartContainer)
         txtItemCount = view.findViewById(R.id.txtItemCount)
         txtSubtotal = view.findViewById(R.id.txtSubtotal)
@@ -75,6 +85,53 @@ class CartFragment : Fragment() {
             val result = CartManager.applyOrderVoucher(
                 edtOrderVoucher.text.toString()
             )
+=======
+        cartContainer =
+            view.findViewById(R.id.cartContainer)
+
+        txtItemCount =
+            view.findViewById(R.id.txtItemCount)
+
+        txtSubtotal =
+            view.findViewById(R.id.txtSubtotal)
+
+        txtOrderDiscount =
+            view.findViewById(R.id.txtOrderDiscount)
+
+        txtDeliveryFee =
+            view.findViewById(R.id.txtDeliveryFee)
+
+        txtShippingDiscount =
+            view.findViewById(R.id.txtShippingDiscount)
+
+        txtTotal =
+            view.findViewById(R.id.txtTotal)
+
+        edtOrderVoucher =
+            view.findViewById(R.id.edtOrderVoucher)
+
+        edtShippingVoucher =
+            view.findViewById(R.id.edtShippingVoucher)
+
+        btnClearCart =
+            view.findViewById(R.id.btnClearCart)
+
+        btnApplyOrderVoucher =
+            view.findViewById(R.id.btnApplyOrderVoucher)
+
+        btnApplyShippingVoucher =
+            view.findViewById(R.id.btnApplyShippingVoucher)
+
+        btnCheckout =
+            view.findViewById(R.id.btnCheckout)
+
+        btnApplyOrderVoucher.setOnClickListener {
+
+            val result =
+                CartManager.applyOrderVoucher(
+                    edtOrderVoucher.text.toString()
+                )
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
 
             Toast.makeText(
                 requireContext(),
@@ -85,6 +142,7 @@ class CartFragment : Fragment() {
             renderCart()
         }
 
+<<<<<<< HEAD
         // =========================
         // VOUCHER VẬN CHUYỂN
         // =========================
@@ -94,6 +152,14 @@ class CartFragment : Fragment() {
             val result = CartManager.applyShippingVoucher(
                 edtShippingVoucher.text.toString()
             )
+=======
+        btnApplyShippingVoucher.setOnClickListener {
+
+            val result =
+                CartManager.applyShippingVoucher(
+                    edtShippingVoucher.text.toString()
+                )
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
 
             Toast.makeText(
                 requireContext(),
@@ -104,15 +170,24 @@ class CartFragment : Fragment() {
             renderCart()
         }
 
+<<<<<<< HEAD
         // =========================
         // XÓA TOÀN BỘ GIỎ
         // =========================
 
+=======
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
         btnClearCart.setOnClickListener {
 
             AlertDialog.Builder(requireContext())
                 .setTitle("Xóa giỏ hàng")
+<<<<<<< HEAD
                 .setMessage("Bạn có chắc muốn xóa toàn bộ món?")
+=======
+                .setMessage(
+                    "Bạn có chắc muốn xóa toàn bộ món?"
+                )
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
                 .setNegativeButton("Không", null)
                 .setPositiveButton("Xóa") { _, _ ->
 
@@ -122,6 +197,7 @@ class CartFragment : Fragment() {
                 .show()
         }
 
+<<<<<<< HEAD
         // =========================
         // ĐẶT HÀNG
         // =========================
@@ -156,10 +232,24 @@ class CartFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
 
+=======
+        btnCheckout.setOnClickListener {
+            if (CartManager.items.isEmpty()) {
+                Toast.makeText(requireContext(), "Giỏ hàng đang trống", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val prefs = requireContext().getSharedPreferences("TuyFoods", 0)
+            val userId = prefs.getLong("userId", -1L)
+
+            if (userId == -1L) {
+                Toast.makeText(requireContext(), "Vui lòng đăng nhập!", Toast.LENGTH_SHORT).show()
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
                 return@setOnClickListener
             }
 
             lifecycleScope.launch {
+<<<<<<< HEAD
 
                 try {
 
@@ -182,6 +272,24 @@ class CartFragment : Fragment() {
                                 items = orderItems
                             )
                         )
+=======
+                try {
+                    val orderItems = CartManager.items.map {
+                        OrderItemRequest(
+                            productId = it.id.toLong(),
+                            quantity = it.quantity
+                        )
+                    }
+
+                    val response = RetrofitClient.instance.createOrder(
+                        OrderRequest(
+                            userId = userId,
+                            deliveryAddress = "Địa chỉ mặc định",
+                            phone = "",
+                            items = orderItems
+                        )
+                    )
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
 
                     OrderManager.createOrder()
 
@@ -191,22 +299,31 @@ class CartFragment : Fragment() {
                         Toast.LENGTH_SHORT
                     ).show()
 
+<<<<<<< HEAD
                     parentFragmentManager
                         .beginTransaction()
                         .replace(
                             R.id.fragmentContainer,
                             OrderTrackingFragment()
                         )
+=======
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.fragmentContainer, OrderTrackingFragment())
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
                         .addToBackStack(null)
                         .commit()
 
                 } catch (e: Exception) {
+<<<<<<< HEAD
 
                     Toast.makeText(
                         requireContext(),
                         "Lỗi kết nối server!",
                         Toast.LENGTH_SHORT
                     ).show()
+=======
+                    Toast.makeText(requireContext(), "Lỗi kết nối server!", Toast.LENGTH_SHORT).show()
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
                 }
             }
         }
@@ -217,7 +334,10 @@ class CartFragment : Fragment() {
     }
 
     override fun onResume() {
+<<<<<<< HEAD
 
+=======
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
         super.onResume()
 
         if (::cartContainer.isInitialized) {
@@ -225,17 +345,28 @@ class CartFragment : Fragment() {
         }
     }
 
+<<<<<<< HEAD
     // =========================================================
     // HIỂN THỊ GIỎ HÀNG
     // =========================================================
 
+=======
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
     private fun renderCart() {
 
         cartContainer.removeAllViews()
 
+<<<<<<< HEAD
         val items = CartManager.items.toList()
 
         val isEmpty = items.isEmpty()
+=======
+        val items =
+            CartManager.items.toList()
+
+        val isEmpty =
+            items.isEmpty()
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
 
         txtItemCount.text =
             "${CartManager.getItemCount()} món"
@@ -257,7 +388,10 @@ class CartFragment : Fragment() {
                     textSize = 17f
                     setTextColor(Color.GRAY)
                     gravity = Gravity.CENTER
+<<<<<<< HEAD
 
+=======
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
                     setPadding(
                         dp(10),
                         dp(60),
@@ -267,21 +401,30 @@ class CartFragment : Fragment() {
                 }
 
             cartContainer.addView(emptyText)
+<<<<<<< HEAD
 
         } else {
 
             items.forEach { item ->
 
+=======
+        } else {
+
+            items.forEach { item ->
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
                 cartContainer.addView(
                     createItemView(item)
                 )
             }
         }
 
+<<<<<<< HEAD
         // =========================
         // TÍNH TIỀN
         // =========================
 
+=======
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
         val subtotal =
             CartManager.getSubtotal()
 
@@ -311,11 +454,16 @@ class CartFragment : Fragment() {
 
         txtOrderDiscount.text =
             if (orderCode == null) {
+<<<<<<< HEAD
 
                 "Giảm giá đơn hàng: -0đ"
 
             } else {
 
+=======
+                "Giảm giá đơn hàng: -0đ"
+            } else {
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
                 "$orderCode: -${formatMoney(orderDiscount)}"
             }
 
@@ -324,19 +472,27 @@ class CartFragment : Fragment() {
 
         txtShippingDiscount.text =
             if (shippingCode == null) {
+<<<<<<< HEAD
 
                 "Giảm phí vận chuyển: -0đ"
 
             } else {
 
+=======
+                "Giảm phí vận chuyển: -0đ"
+            } else {
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
                 "$shippingCode: -${formatMoney(shippingDiscount)}"
             }
     }
 
+<<<<<<< HEAD
     // =========================================================
     // TẠO ITEM TRONG GIỎ
     // =========================================================
 
+=======
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
     private fun createItemView(
         item: FoodItem
     ): View {
@@ -344,6 +500,7 @@ class CartFragment : Fragment() {
         val itemLayout =
             LinearLayout(requireContext()).apply {
 
+<<<<<<< HEAD
                 orientation =
                     LinearLayout.VERTICAL
 
@@ -352,13 +509,25 @@ class CartFragment : Fragment() {
                     dp(12),
                     dp(12),
                     dp(12)
+=======
+                orientation = LinearLayout.VERTICAL
+
+                setPadding(
+                    dp(14),
+                    dp(14),
+                    dp(14),
+                    dp(14)
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
                 )
 
                 background =
                     GradientDrawable().apply {
 
                         setColor(Color.WHITE)
+<<<<<<< HEAD
 
+=======
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
                         cornerRadius =
                             dp(12).toFloat()
 
@@ -377,6 +546,7 @@ class CartFragment : Fragment() {
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
                     ).apply {
+<<<<<<< HEAD
 
                         bottomMargin =
                             dp(10)
@@ -387,6 +557,12 @@ class CartFragment : Fragment() {
         // HÀNG TRÊN
         // =====================================================
 
+=======
+                        bottomMargin = dp(10)
+                    }
+            }
+
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
         val topRow =
             LinearLayout(requireContext()).apply {
 
@@ -397,6 +573,7 @@ class CartFragment : Fragment() {
                     Gravity.CENTER_VERTICAL
             }
 
+<<<<<<< HEAD
         // =====================================================
         // ẢNH MÓN ĂN
         // =====================================================
@@ -436,11 +613,30 @@ class CartFragment : Fragment() {
         // THÔNG TIN MÓN
         // =====================================================
 
+=======
+        val emoji =
+            TextView(requireContext()).apply {
+
+                text = item.emoji
+                textSize = 34f
+                gravity = Gravity.CENTER
+            }
+
+        topRow.addView(
+            emoji,
+            LinearLayout.LayoutParams(
+                dp(55),
+                dp(60)
+            )
+        )
+
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
         val information =
             LinearLayout(requireContext()).apply {
 
                 orientation =
                     LinearLayout.VERTICAL
+<<<<<<< HEAD
 
                 gravity =
                     Gravity.CENTER_VERTICAL
@@ -451,11 +647,14 @@ class CartFragment : Fragment() {
                     dp(8),
                     0
                 )
+=======
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
             }
 
         val name =
             TextView(requireContext()).apply {
 
+<<<<<<< HEAD
                 text =
                     item.name
 
@@ -474,6 +673,12 @@ class CartFragment : Fragment() {
                     null,
                     Typeface.BOLD
                 )
+=======
+                text = item.name
+                textSize = 16f
+                setTextColor(Color.DKGRAY)
+                setTypeface(null, Typeface.BOLD)
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
             }
 
         val unitPrice =
@@ -482,6 +687,7 @@ class CartFragment : Fragment() {
                 text =
                     "${formatMoney(item.price)} / món"
 
+<<<<<<< HEAD
                 textSize =
                     14f
 
@@ -498,6 +704,11 @@ class CartFragment : Fragment() {
                     dp(4),
                     0,
                     0
+=======
+                textSize = 14f
+                setTextColor(
+                    Color.rgb(232, 25, 44)
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
                 )
             }
 
@@ -513,10 +724,13 @@ class CartFragment : Fragment() {
             )
         )
 
+<<<<<<< HEAD
         // =====================================================
         // NÚT XÓA
         // =====================================================
 
+=======
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
         val btnDelete =
             createSmallButton("XÓA")
 
@@ -537,10 +751,13 @@ class CartFragment : Fragment() {
 
         itemLayout.addView(topRow)
 
+<<<<<<< HEAD
         // =====================================================
         // HÀNG SỐ LƯỢNG
         // =====================================================
 
+=======
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
         val quantityRow =
             LinearLayout(requireContext()).apply {
 
@@ -548,10 +765,34 @@ class CartFragment : Fragment() {
                     LinearLayout.HORIZONTAL
 
                 gravity =
+<<<<<<< HEAD
                     Gravity.CENTER_VERTICAL
             }
 
         // Tổng tiền của món
+=======
+                    Gravity.CENTER_VERTICAL or
+                            Gravity.END
+            }
+
+        val btnMinus =
+            createSmallButton("−")
+
+        val txtQuantity =
+            TextView(requireContext()).apply {
+
+                text =
+                    item.quantity.toString()
+
+                textSize = 17f
+                gravity = Gravity.CENTER
+                setTypeface(null, Typeface.BOLD)
+            }
+
+        val btnPlus =
+            createSmallButton("+")
+
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
         val lineTotal =
             TextView(requireContext()).apply {
 
@@ -561,6 +802,7 @@ class CartFragment : Fragment() {
                                 item.quantity
                     )
 
+<<<<<<< HEAD
                 textSize =
                     16f
 
@@ -576,6 +818,13 @@ class CartFragment : Fragment() {
                     null,
                     Typeface.BOLD
                 )
+=======
+                textSize = 16f
+                setTextColor(
+                    Color.rgb(232, 25, 44)
+                )
+                setTypeface(null, Typeface.BOLD)
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
             }
 
         quantityRow.addView(
@@ -587,6 +836,7 @@ class CartFragment : Fragment() {
             )
         )
 
+<<<<<<< HEAD
         // Nút -
         val btnMinus =
             createSmallButton("−")
@@ -614,6 +864,8 @@ class CartFragment : Fragment() {
         val btnPlus =
             createSmallButton("+")
 
+=======
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
         quantityRow.addView(btnMinus)
 
         quantityRow.addView(
@@ -626,6 +878,7 @@ class CartFragment : Fragment() {
 
         quantityRow.addView(btnPlus)
 
+<<<<<<< HEAD
         // Không cho giảm nếu đang là 1
         btnMinus.isEnabled =
             item.quantity > 1
@@ -649,20 +902,42 @@ class CartFragment : Fragment() {
         itemLayout.addView(
             quantityRow
         )
+=======
+        btnMinus.isEnabled =
+            item.quantity > 1
+
+        btnMinus.setOnClickListener {
+
+            CartManager.decreaseQuantity(item)
+            renderCart()
+        }
+
+        btnPlus.setOnClickListener {
+
+            CartManager.increaseQuantity(item)
+            renderCart()
+        }
+
+        itemLayout.addView(quantityRow)
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
 
         return itemLayout
     }
 
+<<<<<<< HEAD
     // =========================================================
     // TẠO BUTTON NHỎ
     // =========================================================
 
+=======
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
     private fun createSmallButton(
         label: String
     ): Button {
 
         return Button(requireContext()).apply {
 
+<<<<<<< HEAD
             text =
                 label
 
@@ -688,14 +963,32 @@ class CartFragment : Fragment() {
                 LinearLayout.LayoutParams(
                     dp(55),
                     dp(42)
+=======
+            text = label
+            textSize = 12f
+            isAllCaps = false
+
+            minWidth = 0
+            minimumWidth = 0
+            minHeight = 0
+            minimumHeight = 0
+
+            layoutParams =
+                LinearLayout.LayoutParams(
+                    dp(60),
+                    dp(45)
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
                 )
         }
     }
 
+<<<<<<< HEAD
     // =========================================================
     // FORMAT TIỀN
     // =========================================================
 
+=======
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
     private fun formatMoney(
         money: Int
     ): String {
@@ -707,6 +1000,7 @@ class CartFragment : Fragment() {
         ).replace(",", ".")
     }
 
+<<<<<<< HEAD
     // =========================================================
     // DP
     // =========================================================
@@ -714,6 +1008,9 @@ class CartFragment : Fragment() {
     private fun dp(
         value: Int
     ): Int {
+=======
+    private fun dp(value: Int): Int {
+>>>>>>> d31ed13d44c2f34ceb4e4c95166b592a82ce5f7c
 
         return (
                 value *
