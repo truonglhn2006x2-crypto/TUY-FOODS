@@ -13,24 +13,39 @@ class FoodAdapter(
     private val onAddClick: (FoodItem) -> Unit
 ) : RecyclerView.Adapter<FoodAdapter.FoodViewHolder>() {
 
-    class FoodViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val imgFood: ImageView = view.findViewById(R.id.imgFood)
-        val txtName: TextView = view.findViewById(R.id.txtName)
-        val txtDescription: TextView = view.findViewById(R.id.txtDescription)
-        val txtPrice: TextView = view.findViewById(R.id.txtPrice)
-        val btnAdd: Button = view.findViewById(R.id.btnAdd)
+    class FoodViewHolder(
+        view: View
+    ) : RecyclerView.ViewHolder(view) {
+
+        val imgFood: ImageView =
+            view.findViewById(R.id.imgFood)
+
+        val txtName: TextView =
+            view.findViewById(R.id.txtName)
+
+        val txtDescription: TextView =
+            view.findViewById(R.id.txtDescription)
+
+        val txtPrice: TextView =
+            view.findViewById(R.id.txtPrice)
+
+        val btnAdd: Button =
+            view.findViewById(R.id.btnAdd)
     }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): FoodViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(
-                R.layout.item_food,
-                parent,
-                false
-            )
+
+        val view =
+            LayoutInflater.from(parent.context)
+                .inflate(
+                    R.layout.item_food,
+                    parent,
+                    false
+                )
+
         return FoodViewHolder(view)
     }
 
@@ -38,32 +53,67 @@ class FoodAdapter(
         holder: FoodViewHolder,
         position: Int
     ) {
-        val food = items[position]
 
-        // ẢNH MÓN ĂN
+        val food =
+            items[position]
+
+        // -------------------------
+        // IMAGE
+        // -------------------------
+
         if (food.imageRes != 0) {
-            holder.imgFood.setImageResource(food.imageRes)
+
+            holder.imgFood.setImageResource(
+                food.imageRes
+            )
         }
 
-        // TÊN
-        holder.txtName.text = food.name
+        // -------------------------
+        // INFORMATION
+        // -------------------------
 
-        // MÔ TẢ
-        holder.txtDescription.text = food.description
+        holder.txtName.text =
+            food.name
 
-        // GIÁ
-        holder.txtPrice.text = "${"%,d".format(food.price)}đ"
+        holder.txtDescription.text =
+            food.description
 
-        // THÊM VÀO GIỎ
+        holder.txtPrice.text =
+            "%,dđ".format(food.price)
+
+        // =================================================
+        // CLICK FOOD
+        // =================================================
+
+        holder.itemView.setOnClickListener {
+
+            onAddClick(food)
+        }
+
+        // =================================================
+        // CLICK ADD BUTTON
+        // =================================================
+
         holder.btnAdd.setOnClickListener {
+
             onAddClick(food)
         }
     }
 
-    override fun getItemCount(): Int = items.size
+    override fun getItemCount(): Int {
+        return items.size
+    }
 
-    fun updateData(newItems: List<FoodItem>) {
+    // =====================================================
+    // UPDATE DATA
+    // =====================================================
+
+    fun updateData(
+        newItems: List<FoodItem>
+    ) {
+
         items = newItems
+
         notifyDataSetChanged()
     }
 }

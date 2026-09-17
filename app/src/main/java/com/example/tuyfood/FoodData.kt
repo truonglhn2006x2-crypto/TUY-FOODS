@@ -468,4 +468,119 @@ object FoodData {
             .sortedByDescending { it.soldCount }
             .take(n)
     }
+    // =========================
+    // FOOD OPTIONS / TOPPINGS
+    // =========================
+
+    fun getOptions(food: FoodItem): List<FoodOption> {
+
+        return when (food.name) {
+
+            // Chân gà sốt Thái
+            "Chân gà sốt Thái" -> listOf(
+                FoodOption("Chân gà thêm", 7000),
+                FoodOption("Trứng non", 10000),
+                FoodOption("Xoài", 5000),
+                FoodOption("Cóc", 5000)
+            )
+
+            // Trà sữa cốm
+            "Trà sữa cốm" -> listOf(
+                FoodOption("Cốm", 5000),
+                FoodOption("Hạt nổ", 5000),
+                FoodOption("Chân trâu trắng", 5000)
+            )
+
+            // Trà tắc
+            "Trà tắc" -> listOf(
+                FoodOption("Nha đam", 5000),
+                FoodOption("Chân trâu trắng", 5000),
+                FoodOption("Con cá", 5000)
+            )
+
+            // Trà chanh
+            "Trà chanh" -> listOf(
+                FoodOption("Nha đam", 5000),
+                FoodOption("Chân trâu trắng", 5000),
+                FoodOption("Con cá", 5000)
+            )
+
+            // Các loại sinh tố
+            "Sinh tố bơ",
+            "Sinh tố mãng cầu",
+            "Sinh tố xoài",
+            "Sinh tố dừa",
+            "Sinh tố dứa" -> listOf(
+                FoodOption("Nha đam", 5000),
+                FoodOption("Chân trâu trắng", 5000),
+                FoodOption("Con cá", 5000)
+            )
+
+            // Trà hoa quả
+            "Trà hoa quả" -> listOf(
+                FoodOption("Hoa quả thêm", 5000),
+                FoodOption("Chân trâu trắng", 5000)
+            )
+
+            // Mì Indomie trứng ốp
+            "Mì Indomie trứng ốp" -> listOf(
+                FoodOption("Trứng ốp la", 7000),
+                FoodOption("Xiên bẩn", 10000),
+                FoodOption("Rau muống", 3000)
+            )
+
+            // Tokbokki
+            "Tokbokki" -> listOf(
+                FoodOption("Cay", 0, "spicy"),
+                FoodOption("Không cay", 0, "spicy"),
+                FoodOption("Chả cá", 10000),
+                FoodOption("Trứng luộc", 7000)
+            )
+
+            // Bánh tráng nướng
+            "Bánh tráng nướng" -> listOf(
+                FoodOption("Thêm phô mai", 10000)
+            )
+
+            // Gà rán
+            "Gà rán giòn" -> listOf(
+                FoodOption("Sốt bơ tỏi", 5000, "sauce"),
+                FoodOption("Sốt cay", 5000, "sauce"),
+                FoodOption("Sốt phô mai", 5000, "sauce")
+            )
+
+            // Xoài dầm
+            "Xoài dầm" -> listOf(
+                FoodOption("Không cay", 0, "spicy"),
+                FoodOption("Cay vừa", 0, "spicy"),
+                FoodOption("Siêu cay", 0, "spicy")
+            )
+
+            // Rau má
+            "Sinh tố rau má" -> listOf(
+                FoodOption("Đậu xanh", 5000),
+                FoodOption("Sữa dừa", 5000)
+            )
+
+            // Sữa tươi chiên
+            "Sữa tươi chiên" -> listOf(
+                FoodOption("Socola", 10000),
+                FoodOption("Dâu tây", 10000)
+            )
+
+            // Trà Thái
+            "Trà Thái xanh/đỏ" -> listOf(
+                FoodOption("Thái xanh", 0, "tea"),
+                FoodOption("Thái đỏ", 0, "tea")
+            )
+
+            // Nước sâm
+            "Nước sâm" -> listOf(
+                FoodOption("Hạt chia", 5000)
+            )
+
+            // Món không có topping
+            else -> emptyList()
+        }
+    }
 }
