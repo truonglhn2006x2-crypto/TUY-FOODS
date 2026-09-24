@@ -1,5 +1,6 @@
 package com.example.tuyfood
 
+import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -33,9 +34,10 @@ class MainActivity : AppCompatActivity() {
                 -1L
             )
 
+
         if (savedInstanceState == null) {
 
-            if (userId != -1L) {
+            if (isLoggedIn()) {
                 openFragment(
                     HomeFragment()
                 )
@@ -81,13 +83,6 @@ class MainActivity : AppCompatActivity() {
                         true
                     }
 
-                    R.id.nav_account -> {
-                        openFragment(
-                            LoginFragment()
-                        )
-                        true
-                    }
-
                     R.id.nav_minigame -> {
                         openFragment(
                             MysteryBoxFragment()
@@ -95,9 +90,38 @@ class MainActivity : AppCompatActivity() {
                         true
                     }
 
+                    R.id.nav_account -> {
+
+                        if (isLoggedIn()) {
+                            openFragment(
+                                ProfileFragment()
+                            )
+                        } else {
+                            openFragment(
+                                LoginFragment()
+                            )
+                        }
+
+                        true
+                    }
+
                     else -> false
                 }
             }
+    }
+
+    private fun isLoggedIn(): Boolean {
+
+        val preferences =
+            getSharedPreferences(
+                "TuyFoods",
+                Context.MODE_PRIVATE
+            )
+
+        return preferences.getLong(
+            "userId",
+            -1L
+        ) != -1L
     }
 
     private fun openFragment(
