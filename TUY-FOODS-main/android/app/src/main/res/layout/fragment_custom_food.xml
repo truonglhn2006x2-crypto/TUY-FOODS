@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F7F7F7">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- TIÊU ĐỀ -->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="🍔 CUSTOM MÓN ĂN"
+            android:textColor="#E8192C"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:text="Tự chọn món theo sở thích của bạn"
+            android:textColor="#666666"
+            android:textSize="14sp" />
+
+        <!-- CHỌN MÓN -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="1. Chọn món"
+            android:textColor="#222222"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/rgFood"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <RadioButton
+                android:id="@+id/rbBurger"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="🍔 Burger bò - 59.000đ"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/rbPizza"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="🍕 Pizza - 99.000đ"
+                android:textSize="16sp" />
+
+        </RadioGroup>
+
+        <!-- CHỌN SIZE -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="2. Chọn size"
+            android:textColor="#222222"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/rgSize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <RadioButton
+                android:id="@+id/rbSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Size S (+0đ)"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/rbMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Size M (+10.000đ)"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/rbLarge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Size L (+20.000đ)"
+                android:textSize="16sp" />
+
+        </RadioGroup>
+
+        <!-- TOPPING -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="3. Chọn topping"
+            android:textColor="#222222"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <CheckBox
+            android:id="@+id/cbCheese"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🧀 Phô mai (+10.000đ)"
+            android:textSize="16sp" />
+
+        <CheckBox
+            android:id="@+id/cbBacon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🥓 Bacon (+15.000đ)"
+            android:textSize="16sp" />
+
+        <CheckBox
+            android:id="@+id/cbSauce"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🥫 Thêm sốt (+5.000đ)"
+            android:textSize="16sp" />
+
+        <!-- SỐ LƯỢNG -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="4. Số lượng"
+            android:textColor="#222222"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/edtQuantity"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:background="#FFFFFF"
+            android:gravity="center"
+            android:inputType="number"
+            android:text="1"
+            android:textSize="18sp" />
+
+        <!-- TỔNG TIỀN -->
+
+        <TextView
+            android:id="@+id/txtTotal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:gravity="center"
+            android:text="Tổng tiền: 0đ"
+            android:textColor="#E8192C"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <!-- THÊM VÀO GIỎ -->
+
+        <Button
+            android:id="@+id/btnAddCustom"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginTop="20dp"
+            android:text="🛒 THÊM VÀO GIỎ HÀNG"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</ScrollView>
