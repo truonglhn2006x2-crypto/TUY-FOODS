@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F7F7F7">
+
+    <!-- HEADER -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:background="#E8192C">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Thực đơn"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🍔"
+            android:textSize="28sp"/>
+    </LinearLayout>
+
+    <!-- CATEGORY -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#FFFFFF"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp">
+
+            <TextView
+                android:id="@+id/btnAll"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="Tất cả"
+                android:textColor="#E8192C"
+                android:textSize="14sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/btnGrill"
+                android:layout_width="90dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="🍢 Nướng"
+                android:textColor="#333333"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/btnFried"
+                android:layout_width="90dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="🍗 Chiên"
+                android:textColor="#333333"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/btnSpicy"
+                android:layout_width="90dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="🥗 Trộn"
+                android:textColor="#333333"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/btnStarch"
+                android:layout_width="90dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="🍞 No nhẹ"
+                android:textColor="#333333"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/btnSmoothie"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="🥤 Sinh tố"
+                android:textColor="#333333"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/btnTea"
+                android:layout_width="90dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="🍵 Trà"
+                android:textColor="#333333"
+                android:textSize="14sp"/>
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <!-- MENU LIST (DYNAMIC DÙNG RECYCLERVIEW) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/txtCategoryTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tất cả món ăn"
+            android:textColor="#222222"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="15dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerFood"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"/>
+
+    </LinearLayout>
+
+</LinearLayout>

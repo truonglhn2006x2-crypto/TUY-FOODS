@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="@drawable/bg_card_white">
+
+    <!-- TÊN MÓN -->
+
+    <TextView
+        android:id="@+id/txtOptionFoodName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tên món"
+        android:textColor="#222222"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtOptionBasePrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="45.000đ"
+        android:textColor="#E8192C"
+        android:textSize="15sp" />
+
+    <!-- ĐƯỜNG KẺ -->
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="12dp"
+        android:background="#EEEEEE" />
+
+    <!-- TIÊU ĐỀ -->
+
+    <TextView
+        android:id="@+id/txtOptionTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tùy chọn món"
+        android:textColor="#222222"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <!-- DANH SÁCH OPTION -->
+
+    <LinearLayout
+        android:id="@+id/optionsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical" />
+
+    <!-- SỐ LƯỢNG -->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Số lượng"
+        android:textColor="#222222"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="42dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <Button
+            android:id="@+id/btnOptionMinus"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:text="−"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txtOptionQuantity"
+            android:layout_width="45dp"
+            android:layout_height="42dp"
+            android:gravity="center"
+            android:text="1"
+            android:textColor="#222222"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnOptionPlus"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:text="+"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+    <!-- TỔNG TIỀN -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Tổng tiền"
+            android:textColor="#555555"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/txtOptionTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="45.000đ"
+            android:textColor="#E8192C"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <!-- THÊM VÀO GIỎ -->
+
+    <Button
+        android:id="@+id/btnAddOptionToCart"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="15dp"
+        android:text="THÊM VÀO GIỎ"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:backgroundTint="#E8192C" />
+
+</LinearLayout>
