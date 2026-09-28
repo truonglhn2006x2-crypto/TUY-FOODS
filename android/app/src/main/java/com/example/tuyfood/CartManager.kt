@@ -21,6 +21,10 @@ object CartManager {
 
     fun addItem(item: FoodItem) {
 
+        if (!item.available) {
+            return
+        }
+
         val quantityToAdd =
             item.quantity.coerceAtLeast(1)
 

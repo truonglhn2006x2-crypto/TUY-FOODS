@@ -9,10 +9,10 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 
 class RegisterFragment : Fragment() {
-
-    private lateinit var databaseHelper: DatabaseHelper
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,8 +25,6 @@ class RegisterFragment : Fragment() {
             container,
             false
         )
-
-        databaseHelper = DatabaseHelper(requireContext())
 
         val edtName =
             view.findViewById<EditText>(R.id.edtName)
@@ -153,33 +151,35 @@ class RegisterFragment : Fragment() {
             }
 
 
-            // 5. Lưu vào SQLite
+            // 5. Lưu vào mySQL
 
-            val success =
-                databaseHelper.registerUser(
-                    name,
-                    email,
-                    password
-                )
+            lifecycleScope.launch {
+                try {
 
+                    RetrofitClient.instance.register(
+                        mapOf(
+                            "name" to name,
+                            "email" to email,
+                            "password" to password
+                        )
+                    )
 
-            if (success) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Đăng ký thành công!",
+                        Toast.LENGTH_SHORT
+                    ).show()
 
-                Toast.makeText(
-                    requireContext(),
-                    "Đăng ký thành công!",
-                    Toast.LENGTH_SHORT
-                ).show()
+                    parentFragmentManager.popBackStack()
 
-                parentFragmentManager.popBackStack()
+                } catch (e: Exception) {
 
-            } else {
-
-                Toast.makeText(
-                    requireContext(),
-                    "Email đã được đăng ký!",
-                    Toast.LENGTH_SHORT
-                ).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Đăng ký thất bại: ${e.message}",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
             }
         }
 

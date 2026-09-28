@@ -6,64 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class HomeFragment : Fragment() {
 
     // Danh sách món ăn nổi bật hiển thị ở trang chủ
-    private val popularFoods = listOf(
-        FoodItem(
-            name = "Burger Bò Đặc Biệt",
-            price = 89000,
-            emoji = "🍔",
-            id = 1,
-            description = "Burger bò 150g juicy, phô mai cheddar tan chảy",
-            category = "Burger",
-            rating = 4.8,
-            badge = "Bán chạy"
-        ),
-        FoodItem(
-            name = "Gà Rán Giòn (2 miếng)",
-            price = 65000,
-            emoji = "🍗",
-            id = 3,
-            description = "Gà rán vàng giòn lớp vỏ nhiều tầng",
-            category = "Gà",
-            rating = 4.7,
-            badge = "HOT"
-        ),
-        FoodItem(
-            name = "Pizza Phô Mai 4 Loại",
-            price = 149000,
-            emoji = "🍕",
-            id = 2,
-            description = "Sự kết hợp của mozzarella, cheddar, parmesan",
-            category = "Pizza",
-            rating = 4.4,
-            badge = ""
-        ),
-        FoodItem(
-            name = "Gà Popcorn Cay",
-            price = 49000,
-            emoji = "🍗",
-            id = 5,
-            description = "Gà miếng nhỏ chiên giòn tẩm bột gia vị cay",
-            category = "Gà",
-            rating = 4.8,
-            badge = "HOT"
-        ),
-        FoodItem(
-            name = "Trà Đào Cam Sả",
-            price = 42000,
-            emoji = "🥤",
-            id = 4,
-            description = "Trà đào thơm ngọt kết hợp cam tươi và sả",
-            category = "Đồ uống",
-            rating = 4.9,
-            badge = ""
-        )
-    )
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -91,54 +43,88 @@ class HomeFragment : Fragment() {
                 .commit()
         }
 
-        // DANH MỤC
-        view.findViewById<View>(R.id.btnBurger).setOnClickListener {
-            openMenu("Burger")
-        }
-
-        view.findViewById<View>(R.id.btnPizza).setOnClickListener {
-            openMenu("Pizza")
-        }
-
-        view.findViewById<View>(R.id.btnChicken).setOnClickListener {
-            openMenu("Gà")
-        }
-
-        view.findViewById<View>(R.id.btnDrink).setOnClickListener {
-            openMenu("Đồ uống")
-        }
-
-        view.findViewById<View>(R.id.btnCustomFood).setOnClickListener {
-            openCustomFood()
-        }
-
-        view.findViewById<View>(R.id.btnOrderTracking).setOnClickListener {
-            openOrderTracking()
-        }
-
-        view.findViewById<View>(R.id.btnSeeAllCategory).setOnClickListener {
-            openMenu(null)
-        }
-
-        view.findViewById<View>(R.id.btnMenu).setOnClickListener {
-            openMenu(null)
-        }
-
+        // AI CHAT
         view.findViewById<View>(R.id.fabChat).setOnClickListener {
-            parentFragmentManager.beginTransaction()
+            parentFragmentManager
+                .beginTransaction()
                 .replace(R.id.fragmentContainer, ChatFragment())
                 .addToBackStack(null)
                 .commit()
         }
 
+        // DANH MỤC
+        view.findViewById<View>(R.id.btnGrill).setOnClickListener {
+            openMenu("Món nướng & Xiên que")
+        }
+
+        view.findViewById<View>(R.id.btnFried).setOnClickListener {
+            openMenu("Món chiên & Rán giòn")
+        }
+
+        view.findViewById<View>(R.id.btnSpicy).setOnClickListener {
+            openMenu("Món trộn & Chua cay giải ngấy")
+        }
+
+        view.findViewById<View>(R.id.btnStarch).setOnClickListener {
+            openMenu("Món no nhẹ & Tinh bột")
+        }
+
+        view.findViewById<View>(R.id.btnSmoothie).setOnClickListener {
+            openMenu("Đồ uống - Sinh tố & Nước mát")
+        }
+
+        view.findViewById<View>(R.id.btnTea).setOnClickListener {
+            openMenu("Đồ uống - Trà & Đá xay")
+        }
+        view.findViewById<View>(R.id.btnSeeAllCategory).setOnClickListener {
+            openMenu(null)
+        }
+
         // MÓN PHỔ BIẾN
         val recyclerPopular = view.findViewById<RecyclerView>(R.id.recyclerPopular)
         recyclerPopular.layoutManager = LinearLayoutManager(requireContext())
-        recyclerPopular.adapter = PopularFoodAdapter(popularFoods) { food ->
-            onAddToCart(food)
-        }
+
+        loadPopularFoods(recyclerPopular)
 
         return view
+    }
+
+    private fun loadPopularFoods(recyclerPopular: RecyclerView) {
+
+        viewLifecycleOwner.lifecycleScope.launch {
+
+            try {
+                val products = withContext(Dispatchers.IO) {
+                    RetrofitClient.instance.getAllProducts()
+                }
+
+                val topFoods = FoodData.getTopSelling(5)
+
+                val foods = topFoods.map { localFood ->
+
+                    val product = products.find {
+                        it.name == localFood.name
+                    }
+
+                    localFood.copy(
+                        available = product?.available ?: true
+                    )
+                }
+
+                recyclerPopular.adapter =
+                    PopularFoodAdapter(foods) { food ->
+                        onAddToCart(food)
+                    }
+
+            } catch (e: Exception) {
+
+                Toast.makeText(
+                    requireContext(),
+                    "Không thể tải trạng thái món ăn",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
     }
 
     private fun openMenu(category: String?) {
@@ -182,6 +168,4 @@ class HomeFragment : Fragment() {
             Toast.LENGTH_SHORT
         ).show()
     }
-
-
 }

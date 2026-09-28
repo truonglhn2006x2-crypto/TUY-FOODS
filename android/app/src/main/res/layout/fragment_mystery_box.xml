@@ -40,6 +40,26 @@
             android:textSize="19sp"
             android:textStyle="bold"/>
 
+        <TextView
+                android:id="@+id/txtPointsAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="⭐ Điểm: 0"
+                android:textColor="#FFFFFF"
+                android:textSize="17sp"
+                android:textStyle="bold"/>
+
+        <Button
+                android:id="@+id/btnExchangeKey"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#27AE60"
+                android:text="⭐ ĐỔI 100 ĐIỂM → 1 🔑"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"/>
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="155dp"
@@ -91,15 +111,6 @@
             android:textColor="#FFFFFF"
             android:textSize="17sp"
             android:textStyle="bold"/>
-
-        <Button
-            android:id="@+id/btnAddDemoKey"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="8dp"
-            android:backgroundTint="#34495E"
-            android:text="+ 1 CHÌA KHÓA DEMO"
-            android:textColor="#FFFFFF"/>
 
         <TextView
             android:id="@+id/txtRewardResult"

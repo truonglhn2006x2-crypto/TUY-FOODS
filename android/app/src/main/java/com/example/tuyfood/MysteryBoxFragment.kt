@@ -38,12 +38,14 @@ class MysteryBoxFragment : Fragment() {
 
     private lateinit var txtRewardInventory:
             TextView
+    private lateinit var txtPointsAmount:
+            TextView
 
+    private lateinit var btnExchangeKey:
+            Button
     private lateinit var btnOpenCase:
             Button
 
-    private lateinit var btnAddDemoKey:
-            Button
 
     private var opening = false
 
@@ -80,27 +82,13 @@ class MysteryBoxFragment : Fragment() {
         txtKeyAmount =
             view.findViewById(R.id.txtKeyAmount)
 
-        txtRewardResult =
-            view.findViewById(R.id.txtRewardResult)
+        txtPointsAmount =
+            view.findViewById(R.id.txtPointsAmount)
 
-        txtRewardInventory =
-            view.findViewById(R.id.txtRewardInventory)
+        btnExchangeKey =
+            view.findViewById(R.id.btnExchangeKey)
 
-        btnOpenCase =
-            view.findViewById(R.id.btnOpenCase)
-
-        btnAddDemoKey =
-            view.findViewById(R.id.btnAddDemoKey)
-
-        btnOpenCase.setOnClickListener {
-            openCase()
-        }
-
-        /*
-         * Nút này dành cho quá trình chạy thử.
-         * Có thể xóa khi hoàn thiện ứng dụng.
-         */
-        btnAddDemoKey.setOnClickListener {
+        btnExchangeKey.setOnClickListener {
 
             val preferences =
                 requireContext()
@@ -126,7 +114,13 @@ class MysteryBoxFragment : Fragment() {
 
                     val user =
                         RetrofitClient.instance
-                            .addMiniGameKey(userId)
+                            .exchangePointsForKeys(
+                                userId = userId,
+                                keys = 1
+                            )
+
+                    txtPointsAmount.text =
+                        "⭐ Điểm: ${user.points}"
 
                     txtKeyAmount.text =
                         "🔑 Chìa khóa: ${user.miniGameKeys}"
@@ -136,7 +130,7 @@ class MysteryBoxFragment : Fragment() {
 
                     Toast.makeText(
                         requireContext(),
-                        "Đã thêm một chìa khóa demo",
+                        "Đã đổi 100 điểm lấy 1 chìa khóa",
                         Toast.LENGTH_SHORT
                     ).show()
 
@@ -144,12 +138,31 @@ class MysteryBoxFragment : Fragment() {
 
                     Toast.makeText(
                         requireContext(),
-                        "Không thể thêm chìa khóa",
+                        "Không đủ điểm để đổi chìa khóa",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
             }
         }
+
+        txtRewardResult =
+            view.findViewById(R.id.txtRewardResult)
+
+        txtRewardInventory =
+            view.findViewById(R.id.txtRewardInventory)
+
+        btnOpenCase =
+            view.findViewById(R.id.btnOpenCase)
+
+
+        btnOpenCase.setOnClickListener {
+            openCase()
+        }
+
+        /*
+         * Nút này dành cho quá trình chạy thử.
+         * Có thể xóa khi hoàn thiện ứng dụng.
+         */
 
         showPreview()
         updateInformation()
@@ -184,7 +197,6 @@ class MysteryBoxFragment : Fragment() {
         opening = true
 
         btnOpenCase.isEnabled = false
-        btnAddDemoKey.isEnabled = false
 
         txtRewardResult.text =
             "Đang kiểm tra chìa khóa..."
@@ -213,7 +225,6 @@ class MysteryBoxFragment : Fragment() {
                     opening = false
 
                     btnOpenCase.isEnabled = false
-                    btnAddDemoKey.isEnabled = true
 
                     txtRewardResult.text =
                         "Bạn đã hết chìa khóa."
@@ -250,7 +261,6 @@ class MysteryBoxFragment : Fragment() {
                 opening = false
 
                 btnOpenCase.isEnabled = false
-                btnAddDemoKey.isEnabled = true
 
                 Toast.makeText(
                     requireContext(),
@@ -566,7 +576,6 @@ class MysteryBoxFragment : Fragment() {
                     !opening &&
                             user.miniGameKeys > 0
 
-                btnAddDemoKey.isEnabled =
                     !opening
 
             } catch (e: Exception) {

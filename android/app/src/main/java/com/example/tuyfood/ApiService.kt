@@ -8,7 +8,15 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
+import retrofit2.http.PATCH
 import java.util.concurrent.TimeUnit
+
+data class CategoryResponse(
+    val id: Long,
+    val name: String,
+    val description: String?,
+    val image: String?
+)
 
 data class ProductResponse(
     val id: Long,
@@ -16,7 +24,9 @@ data class ProductResponse(
     val price: Double,
     val description: String?,
     val image: String?,
-    val available: Boolean
+    val rating: Double?,
+    val available: Boolean,
+    val category: CategoryResponse?
 )
 
 data class LoginResponse(
@@ -33,6 +43,10 @@ data class OrderRequest(
     val userId: Long,
     val deliveryAddress: String,
     val phone: String,
+    val orderDiscount: Int,
+    val shippingDiscount: Int,
+    val orderVoucherCode: String?,
+    val shippingVoucherCode: String?,
     val items: List<OrderItemRequest>
 )
 
@@ -42,9 +56,24 @@ data class OrderItemRequest(
 )
 
 data class OrderApiResponse(
-    val orderId: Long,
+    val id: Long,
     val totalAmount: Double,
-    val status: String
+    val discountAmount: Double,
+    val status: String,
+    val deliveryAddress: String?,
+    val phone: String?,
+    val note: String?,
+    val paymentMethod: String,
+    val createdAt: String,
+    val items: List<OrderItemResponse>
+)
+
+data class OrderItemResponse(
+    val id: Long,
+    val product: ProductResponse,
+    val productName: String,
+    val price: Double,
+    val quantity: Int
 )
 
 data class MiniGameResultResponse(
@@ -81,6 +110,12 @@ interface ApiService {
         @Path("userId") userId: Long
     ): UserResponse
 
+    @POST("api/minigame/exchange")
+    suspend fun exchangePointsForKeys(
+        @Query("userId") userId: Long,
+        @Query("keys") keys: Int
+    ): UserResponse
+
     @POST("api/minigame/play")
     suspend fun playMiniGame(
         @Query("userId") userId: Long,
@@ -95,6 +130,9 @@ interface ApiService {
     @GET("api/products")
     suspend fun getAllProducts(): List<ProductResponse>
 
+    @GET("api/categories")
+    suspend fun getAllCategories(): List<CategoryResponse>
+
     @GET("api/products/search")
     suspend fun searchProducts(
         @Query("keyword") keyword: String
@@ -104,6 +142,11 @@ interface ApiService {
     suspend fun login(
         @Body body: Map<String, String>
     ): LoginResponse
+
+    @POST("api/auth/register")
+    suspend fun register(
+        @Body body: Map<String, String>
+    ): Map<String, Any>
 
     @POST("api/chat")
     suspend fun chat(
@@ -119,6 +162,15 @@ interface ApiService {
     suspend fun getUserOrders(
         @Path("userId") userId: Long
     ): List<OrderApiResponse>
+
+    @GET("api/orders")
+    suspend fun getAllOrders(): List<OrderApiResponse>
+
+    @PATCH("api/orders/{id}/status")
+    suspend fun updateOrderStatus(
+        @Path("id") orderId: Long,
+        @Query("status") status: String
+    ): OrderApiResponse
 
     @GET("api/membership/{userId}")
     suspend fun getMembership(

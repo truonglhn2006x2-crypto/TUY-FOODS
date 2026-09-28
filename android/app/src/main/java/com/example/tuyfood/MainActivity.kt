@@ -73,13 +73,25 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     R.id.nav_orders -> {
-                        /*
-                         * Mở danh sách lịch sử
-                         * thay vì chỉ mở đơn mới nhất.
-                         */
-                        openFragment(
-                            OrderHistoryFragment()
+
+                        val role = preferences.getString(
+                            "role",
+                            "CUSTOMER"
                         )
+
+                        if (role == "ADMIN") {
+
+                            openFragment(
+                                AdminOrderFragment()
+                            )
+
+                        } else {
+
+                            openFragment(
+                                OrderHistoryFragment()
+                            )
+                        }
+
                         true
                     }
 
@@ -93,10 +105,27 @@ class MainActivity : AppCompatActivity() {
                     R.id.nav_account -> {
 
                         if (isLoggedIn()) {
-                            openFragment(
-                                ProfileFragment()
+
+                            val role = preferences.getString(
+                                "role",
+                                "CUSTOMER"
                             )
+
+                            if (role == "ADMIN") {
+
+                                openFragment(
+                                    AdminProfileFragment()
+                                )
+
+                            } else {
+
+                                openFragment(
+                                    ProfileFragment()
+                                )
+                            }
+
                         } else {
+
                             openFragment(
                                 LoginFragment()
                             )

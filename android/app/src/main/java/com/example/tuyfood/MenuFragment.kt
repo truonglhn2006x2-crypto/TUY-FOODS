@@ -7,6 +7,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.launch
 
 class MenuFragment : Fragment() {
 
@@ -22,220 +26,158 @@ class MenuFragment : Fragment() {
             false
         )
 
-        // Lấy category được truyền từ HomeFragment
         val category = arguments?.getString("category")
 
         val txtCategoryTitle =
             view.findViewById<TextView>(R.id.txtCategoryTitle)
 
-        val cardBurger =
-            view.findViewById<View>(R.id.cardBurger)
-
-        val cardPizza =
-            view.findViewById<View>(R.id.cardPizza)
-
-        val cardChicken =
-            view.findViewById<View>(R.id.cardChicken)
-
-        val cardDrink =
-            view.findViewById<View>(R.id.cardDrink)
-
-        // Hiển thị category ban đầu
-        if (category != null) {
-            txtCategoryTitle.text = category
-
-            showOnlyCategory(
-                category,
-                cardBurger,
-                cardPizza,
-                cardChicken,
-                cardDrink
-            )
-        }
-
-        // =========================
-        // CATEGORY BUTTONS
-        // =========================
+        val recyclerMenu =
+            view.findViewById<RecyclerView>(R.id.recyclerMenu)
 
         val btnAll =
             view.findViewById<View>(R.id.btnAll)
 
-        val btnBurgerCategory =
-            view.findViewById<View>(R.id.btnBurgerCategory)
+        val btnGrillCategory =
+            view.findViewById<View>(R.id.btnGrillCategory)
 
-        val btnPizzaCategory =
-            view.findViewById<View>(R.id.btnPizzaCategory)
+        val btnFriedCategory =
+            view.findViewById<View>(R.id.btnFriedCategory)
 
-        val btnChickenCategory =
-            view.findViewById<View>(R.id.btnChickenCategory)
+        val btnSpicyCategory =
+            view.findViewById<View>(R.id.btnSpicyCategory)
 
-        val btnDrinkCategory =
-            view.findViewById<View>(R.id.btnDrinkCategory)
+        val btnStarchCategory =
+            view.findViewById<View>(R.id.btnStarchCategory)
 
+        val btnSmoothieCategory =
+            view.findViewById<View>(R.id.btnSmoothieCategory)
 
+        val btnTeaCategory =
+            view.findViewById<View>(R.id.btnTeaCategory)
+
+        recyclerMenu.layoutManager =
+            LinearLayoutManager(requireContext())
+
+        val adapter = FoodAdapter(emptyList()) { food ->
+            CartManager.addItem(food)
+
+            Toast.makeText(
+                requireContext(),
+                "Đã thêm ${food.name} vào giỏ hàng",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
+        recyclerMenu.adapter = adapter
+
+        // Danh sách món lấy từ API
+        var foodsFromApi = emptyList<FoodItem>()
+
+        // Lọc danh mục
+        fun showCategory(selectedCategory: String?) {
+
+            val filteredFoods = if (selectedCategory == null) {
+                foodsFromApi
+            } else {
+                foodsFromApi.filter {
+                    it.category == selectedCategory
+                }
+            }
+
+            adapter.updateData(filteredFoods)
+
+            txtCategoryTitle.text =
+                selectedCategory ?: "Tất cả món ăn"
+        }
+
+        // Lấy món ăn từ API
+        viewLifecycleOwner.lifecycleScope.launch {
+            try {
+
+                val products =
+                    RetrofitClient.instance.getAllProducts()
+
+                val foods = products.map { product ->
+
+                    val localFood = FoodData.allFoods.find {
+                        it.name == product.name
+                    }
+
+                    FoodItem(
+                        id = product.id.toInt(),
+                        name = product.name,
+                        price = product.price.toInt(),
+                        emoji = localFood?.emoji ?: "🍽️",
+                        imageRes = localFood?.imageRes ?: 0,
+                        description =
+                            product.description
+                                ?: localFood?.description
+                                ?: "",
+                        category =
+                            localFood?.category
+                                ?: product.category?.name
+                                ?: "",
+                        rating = product.rating ?: 0.0,
+                        quantity = 1,
+                        available = product.available
+
+                    )
+                }
+
+                // Lưu danh sách API
+                foodsFromApi = foods
+
+                // Hiển thị dữ liệu
+                adapter.updateData(foodsFromApi)
+
+                // Nếu đi từ Home vào một danh mục
+                showCategory(category)
+
+            } catch (e: Exception) {
+
+                Toast.makeText(
+                    requireContext(),
+                    "Không thể tải món ăn từ server",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+        // TẤT CẢ
         btnAll.setOnClickListener {
-            txtCategoryTitle.text = "Tất cả món ăn"
-
-            cardBurger.visibility = View.VISIBLE
-            cardPizza.visibility = View.VISIBLE
-            cardChicken.visibility = View.VISIBLE
-            cardDrink.visibility = View.VISIBLE
+            showCategory(null)
         }
 
-        btnBurgerCategory.setOnClickListener {
-            txtCategoryTitle.text = "Burger"
-
-            showOnlyCategory(
-                "Burger",
-                cardBurger,
-                cardPizza,
-                cardChicken,
-                cardDrink
-            )
+        // MÓN NƯỚNG
+        btnGrillCategory.setOnClickListener {
+            showCategory("Món nướng & Xiên que")
         }
 
-        btnPizzaCategory.setOnClickListener {
-            txtCategoryTitle.text = "Pizza"
-
-            showOnlyCategory(
-                "Pizza",
-                cardBurger,
-                cardPizza,
-                cardChicken,
-                cardDrink
-            )
+        // MÓN CHIÊN
+        btnFriedCategory.setOnClickListener {
+            showCategory("Món chiên & Rán giòn")
         }
 
-        btnChickenCategory.setOnClickListener {
-            txtCategoryTitle.text = "Gà"
-
-            showOnlyCategory(
-                "Gà",
-                cardBurger,
-                cardPizza,
-                cardChicken,
-                cardDrink
-            )
+        // MÓN TRỘN
+        btnSpicyCategory.setOnClickListener {
+            showCategory("Món trộn & Chua cay giải ngấy")
         }
 
-        btnDrinkCategory.setOnClickListener {
-            txtCategoryTitle.text = "Đồ uống"
-
-            showOnlyCategory(
-                "Đồ uống",
-                cardBurger,
-                cardPizza,
-                cardChicken,
-                cardDrink
-            )
+        // MÓN NO NHẸ
+        btnStarchCategory.setOnClickListener {
+            showCategory("Món no nhẹ & Tinh bột")
         }
 
-
-        // =========================
-        // ADD BURGER
-        // =========================
-
-        val btnAddBurger =
-            view.findViewById<View>(R.id.btnAddBurger)
-
-        btnAddBurger.setOnClickListener {
-
-            val burger = FoodItem(
-                name = "Burger bò phô mai",
-                price = 59000,
-                emoji = "🍔"
-            )
-
-            CartManager.addItem(burger)
-
-            Toast.makeText(
-                requireContext(),
-                "Đã thêm Burger vào giỏ hàng",
-                Toast.LENGTH_SHORT
-            ).show()
-
-            parentFragmentManager
-                .beginTransaction()
-                .replace(
-                    R.id.fragmentContainer,
-                    CartFragment()
-                )
-                .addToBackStack(null)
-                .commit()
+        // SINH TỐ
+        btnSmoothieCategory.setOnClickListener {
+            showCategory("Đồ uống - Sinh tố & Nước mát")
         }
 
-
-        // =========================
-        // ADD PIZZA
-        // =========================
-
-        val btnAddPizza =
-            view.findViewById<View>(R.id.btnAddPizza)
-
-        btnAddPizza.setOnClickListener {
-
-            val pizza = FoodItem(
-                name ="Pizza Hải Sản",
-                price =129000,
-                emoji ="🍕"
-            )
-
-            CartManager.addItem(pizza)
-
-            Toast.makeText(
-                requireContext(),
-                "Đã thêm Pizza vào giỏ hàng",
-                Toast.LENGTH_SHORT
-            ).show()
-
-            parentFragmentManager
-                .beginTransaction()
-                .replace(
-                    R.id.fragmentContainer,
-                    CartFragment()
-                )
-                .addToBackStack(null)
-                .commit()
+        // TRÀ
+        btnTeaCategory.setOnClickListener {
+            showCategory("Đồ uống - Trà & Đá xay")
         }
 
         return view
-    }
-
-
-    // =========================
-    // FILTER CATEGORY
-    // =========================
-
-    private fun showOnlyCategory(
-        category: String,
-        burger: View,
-        pizza: View,
-        chicken: View,
-        drink: View
-    ) {
-
-        burger.visibility = View.GONE
-        pizza.visibility = View.GONE
-        chicken.visibility = View.GONE
-        drink.visibility = View.GONE
-
-        when (category) {
-
-            "Burger" -> {
-                burger.visibility = View.VISIBLE
-            }
-
-            "Pizza" -> {
-                pizza.visibility = View.VISIBLE
-            }
-
-            "Gà" -> {
-                chicken.visibility = View.VISIBLE
-            }
-
-            "Đồ uống" -> {
-                drink.visibility = View.VISIBLE
-            }
-        }
     }
 }

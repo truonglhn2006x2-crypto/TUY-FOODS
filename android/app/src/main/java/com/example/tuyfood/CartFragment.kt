@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment
 import java.util.Locale
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
+import android.widget.ImageView
 
 class CartFragment : Fragment() {
 
@@ -164,20 +165,41 @@ class CartFragment : Fragment() {
                             userId = userId,
                             deliveryAddress = "Địa chỉ mặc định",
                             phone = "",
+                            orderDiscount = CartManager.getOrderDiscount(),
+                            shippingDiscount = CartManager.getShippingDiscount(),
+                            orderVoucherCode = CartManager.appliedOrderVoucherCode,
+                            shippingVoucherCode = CartManager.appliedShippingVoucherCode,
                             items = orderItems
                         )
                     )
 
-                    OrderManager.createOrder()
+
+                    val createdOrder =
+                        OrderManager.createOrder(response.id)
 
                     Toast.makeText(
                         requireContext(),
-                        "Đặt hàng thành công! Mã đơn #${response.orderId}",
+                        "Đặt hàng thành công! Mã đơn #${response.id}",
                         Toast.LENGTH_SHORT
                     ).show()
 
+                    val bundle = Bundle().apply {
+                        putInt(
+                            "orderId",
+                            response.id.toInt()
+                        )
+                    }
+
+                    val trackingFragment =
+                        OrderTrackingFragment().apply {
+                            arguments = bundle
+                        }
+
                     parentFragmentManager.beginTransaction()
-                        .replace(R.id.fragmentContainer, OrderTrackingFragment())
+                        .replace(
+                            R.id.fragmentContainer,
+                            trackingFragment
+                        )
                         .addToBackStack(null)
                         .commit()
 
@@ -345,16 +367,20 @@ class CartFragment : Fragment() {
                     Gravity.CENTER_VERTICAL
             }
 
-        val emoji =
-            TextView(requireContext()).apply {
+        val imageFood =
+            ImageView(requireContext()).apply {
 
-                text = item.emoji
-                textSize = 34f
-                gravity = Gravity.CENTER
+                if (item.imageRes != 0) {
+                    setImageResource(item.imageRes)
+                } else {
+                    setImageResource(android.R.drawable.ic_menu_gallery)
+                }
+
+                scaleType = ImageView.ScaleType.CENTER_CROP
             }
 
         topRow.addView(
-            emoji,
+            imageFood,
             LinearLayout.LayoutParams(
                 dp(55),
                 dp(60)

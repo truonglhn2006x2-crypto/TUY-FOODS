@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import android.widget.ImageView
 
 class FoodAdapter(
     private var items: List<FoodItem>,
@@ -13,7 +14,7 @@ class FoodAdapter(
 ) : RecyclerView.Adapter<FoodAdapter.FoodViewHolder>() {
 
     class FoodViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val txtEmoji: TextView = view.findViewById(R.id.txtEmoji)
+        val imgFood: ImageView = view.findViewById(R.id.imgFood)
         val txtName: TextView = view.findViewById(R.id.txtName)
         val txtDescription: TextView = view.findViewById(R.id.txtDescription)
         val txtPrice: TextView = view.findViewById(R.id.txtPrice)
@@ -29,13 +30,26 @@ class FoodAdapter(
     override fun onBindViewHolder(holder: FoodViewHolder, position: Int) {
         val food = items[position]
 
-        holder.txtEmoji.text = food.emoji
+        if (food.imageRes != 0) {
+            holder.imgFood.setImageResource(food.imageRes)
+        }
         holder.txtName.text = food.name
-        holder.txtDescription.text = food.description
-        holder.txtPrice.text = "${"%,d".format(food.price)}đ"
+        if (food.available) {
+            holder.txtDescription.text = food.description
+            holder.txtPrice.text = "${"%,d".format(food.price)}đ"
 
-        holder.btnAdd.setOnClickListener {
-            onAddClick(food)
+            holder.btnAdd.isEnabled = true
+            holder.btnAdd.alpha = 1f
+            holder.btnAdd.setOnClickListener {
+                onAddClick(food)
+            }
+        } else {
+            holder.txtDescription.text = "MÓN ĂN ĐÃ HẾT"
+            holder.txtPrice.text = "Xin vui lòng chọn món khác"
+
+            holder.btnAdd.isEnabled = false
+            holder.btnAdd.alpha = 0.5f
+            holder.btnAdd.setOnClickListener(null)
         }
     }
 

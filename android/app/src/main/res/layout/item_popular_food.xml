@@ -15,14 +15,13 @@
         android:layout_width="72dp"
         android:layout_height="72dp">
 
-        <TextView
-            android:id="@+id/txtEmoji"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            android:background="@drawable/bg_category_icon"
-            android:gravity="center"
-            android:textSize="34sp"
-            tools:text="🍔" />
+        <ImageView
+                android:id="@+id/imgFood"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:background="@drawable/bg_category_icon"
+                android:scaleType="centerCrop"
+                android:contentDescription="Ảnh món ăn" />
 
         <TextView
             android:id="@+id/txtBadge"

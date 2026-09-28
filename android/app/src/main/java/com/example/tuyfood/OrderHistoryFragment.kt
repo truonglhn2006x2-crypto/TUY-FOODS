@@ -22,6 +22,10 @@ import androidx.fragment.app.Fragment
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
+import java.time.LocalDateTime
+import java.time.ZoneId
 
 class OrderHistoryFragment : Fragment() {
 
@@ -132,7 +136,7 @@ class OrderHistoryFragment : Fragment() {
         )
 
         updateFilterButtons()
-        renderOrders()
+        loadOrdersFromServer()
 
         return view
     }
@@ -142,6 +146,49 @@ class OrderHistoryFragment : Fragment() {
 
         if (::historyContainer.isInitialized) {
             renderOrders()
+        }
+    }
+
+    private fun loadOrdersFromServer() {
+
+        val prefs =
+            requireContext().getSharedPreferences(
+                "TuyFoods",
+                0
+            )
+
+        val userId =
+            prefs.getLong("userId", -1L)
+
+        if (userId == -1L) {
+            renderOrders()
+            return
+        }
+
+        lifecycleScope.launch {
+
+            try {
+
+                val serverOrders =
+                    RetrofitClient.instance
+                        .getUserOrders(userId)
+
+                OrderManager.replaceOrdersFromServer(
+                    serverOrders
+                )
+
+                renderOrders()
+
+            } catch (e: Exception) {
+
+                Toast.makeText(
+                    requireContext(),
+                    "Không thể tải lịch sử đơn hàng",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                renderOrders()
+            }
         }
     }
 
@@ -347,6 +394,40 @@ class OrderHistoryFragment : Fragment() {
         val detailButton =
             createActionButton("CHI TIẾT")
 
+        if (
+            order.status != ORDER_COMPLETED &&
+            order.status != ORDER_CANCELLED
+        ) {
+            val trackingButton =
+                createActionButton("THEO DÕI")
+
+            trackingButton.setOnClickListener {
+
+                val bundle = Bundle().apply {
+                    putInt("orderId", order.orderId)
+                }
+
+                val trackingFragment =
+                    OrderTrackingFragment().apply {
+                        arguments = bundle
+                    }
+
+                parentFragmentManager
+                    .beginTransaction()
+                    .replace(
+                        R.id.fragmentContainer,
+                        trackingFragment
+                    )
+                    .addToBackStack(null)
+                    .commit()
+            }
+
+            buttonRow.addView(
+                trackingButton,
+                buttonLayoutParams()
+            )
+        }
+
         detailButton.setOnClickListener {
             showOrderDetail(order)
         }
@@ -488,22 +569,25 @@ class OrderHistoryFragment : Fragment() {
             .setPositiveButton("Hủy đơn") {
                     _, _ ->
 
-                val success =
-                    OrderManager.cancelOrder(
-                        order.orderId
-                    )
+                viewLifecycleOwner.lifecycleScope.launch {
 
-                Toast.makeText(
-                    requireContext(),
-                    if (success) {
-                        "Đã hủy đơn hàng"
-                    } else {
-                        "Đơn hàng không thể hủy"
-                    },
-                    Toast.LENGTH_SHORT
-                ).show()
+                    val success =
+                        OrderManager.cancelOrder(
+                            order.orderId
+                        )
 
-                renderOrders()
+                    Toast.makeText(
+                        requireContext(),
+                        if (success) {
+                            "Đã hủy đơn hàng"
+                        } else {
+                            "Đơn hàng không thể hủy"
+                        },
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    renderOrders()
+                }
             }
             .show()
     }
