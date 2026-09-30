@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+
 import java.time.LocalDateTime;
 
 @Data
@@ -22,6 +23,12 @@ public class GameResult {
     private MiniGame game;
 
     private Integer score = 0;
+
     private Integer reward = 0;
+
+    @Column(name = "reward_code")
+    private String rewardCode;
+
+    @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
 }

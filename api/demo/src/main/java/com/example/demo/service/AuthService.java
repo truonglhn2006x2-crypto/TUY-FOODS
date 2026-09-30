@@ -21,11 +21,36 @@ public class AuthService {
     }
 
     public User login(String email, String password) {
+
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Email không tồn tại"));
+
         if (!user.getPassword().equals(password)) {
             throw new RuntimeException("Sai mật khẩu");
         }
+
+        // Chỉ CUSTOMER mới được nhận điểm đăng nhập hằng ngày
+        if (user.getRole() == User.Role.CUSTOMER) {
+
+            java.time.LocalDate today =
+                    java.time.LocalDate.now();
+
+            // Hôm nay chưa nhận điểm
+            if (!today.equals(user.getLastDailyLogin())) {
+
+                int currentPoints =
+                        user.getPoints() == null
+                                ? 0
+                                : user.getPoints();
+
+                user.setPoints(currentPoints + 100);
+
+                user.setLastDailyLogin(today);
+
+                userRepository.save(user);
+            }
+        }
+
         return user;
     }
 }

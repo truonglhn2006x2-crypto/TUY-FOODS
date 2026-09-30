@@ -25,6 +25,9 @@ public class Product {
     private BigDecimal rating = BigDecimal.ZERO;
     private Boolean available = true;
 
+    @Column(nullable = false)
+    private Boolean active = true;
+
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;

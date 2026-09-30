@@ -24,7 +24,14 @@ public class User {
 
     private String phone;
     private String address;
+
     private Integer points = 0;
+
+    @Column(name = "mini_game_keys")
+    private Integer miniGameKeys = 3;
+
+    @Column(name = "last_daily_login")
+    private java.time.LocalDate lastDailyLogin;
 
     @Enumerated(EnumType.STRING)
     private Role role = Role.CUSTOMER;
@@ -36,5 +43,8 @@ public class User {
     @JoinColumn(name = "member_level_id")
     private MemberLevel memberLevel;
 
-    public enum Role { CUSTOMER, ADMIN }
+    public enum Role {
+        CUSTOMER,
+        ADMIN
+    }
 }

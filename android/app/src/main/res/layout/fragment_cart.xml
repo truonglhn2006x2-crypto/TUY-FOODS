@@ -76,7 +76,7 @@
                 android:layout_width="0dp"
                 android:layout_height="52dp"
                 android:layout_weight="1"
-                android:hint="TUYFOOD10 hoặc GIAM20K"
+                android:hint="nhập mã giảm giá"
                 android:inputType="textCapCharacters"
                 android:singleLine="true"/>
 
@@ -121,7 +121,7 @@
                 android:layout_width="0dp"
                 android:layout_height="52dp"
                 android:layout_weight="1"
-                android:hint="Nhập FREESHIP"
+                android:hint="Nhập mã freeship"
                 android:inputType="textCapCharacters"
                 android:singleLine="true"/>
 

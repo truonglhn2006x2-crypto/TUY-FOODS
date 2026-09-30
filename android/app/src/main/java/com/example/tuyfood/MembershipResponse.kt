@@ -11,4 +11,3 @@ data class MembershipResponse(
     val unlockedFeatures: List<String>,
     val lockedFeatures: List<String>
 )
-

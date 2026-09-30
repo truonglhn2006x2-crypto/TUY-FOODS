@@ -14,11 +14,11 @@ public class ProductService {
     private ProductRepository productRepository;
 
     public List<Product> getAll() {
-        return productRepository.findByAvailable(true);
+        return productRepository.findByActive(true);
     }
 
     public List<Product> getByCategory(Long categoryId) {
-        return productRepository.findByCategoryId(categoryId);
+        return productRepository.findByCategoryIdAndActive(categoryId, true);
     }
 
     public Product getById(Long id) {
@@ -31,6 +31,6 @@ public class ProductService {
     }
 
     public List<Product> search(String keyword) {
-        return productRepository.findByNameContainingIgnoreCase(keyword);
+        return productRepository.findByNameContainingIgnoreCaseAndActive(keyword, true);
     }
 }

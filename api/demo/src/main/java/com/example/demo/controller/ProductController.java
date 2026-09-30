@@ -39,6 +39,22 @@ public class ProductController {
         return ResponseEntity.ok(productService.save(product));
     }
 
+    @PatchMapping("/{id}/availability")
+    public ResponseEntity<?> updateAvailability(
+            @PathVariable Long id,
+            @RequestParam Boolean available) {
+        try {
+            Product product = productService.getById(id);
+            product.setAvailable(available);
+
+            return ResponseEntity.ok(
+                    productService.save(product)
+            );
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     @GetMapping("/search")
     public List<Product> search(@RequestParam String keyword) {
         return productService.search(keyword);

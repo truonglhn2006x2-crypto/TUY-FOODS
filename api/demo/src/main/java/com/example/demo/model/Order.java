@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.math.BigDecimal;
@@ -17,16 +18,20 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
     private User user;
 
     private BigDecimal totalAmount;
+
     private BigDecimal discountAmount = BigDecimal.ZERO;
 
     @Enumerated(EnumType.STRING)
     private Status status = Status.PENDING;
 
     private String deliveryAddress;
+
     private String phone;
+
     private String note;
 
     @Enumerated(EnumType.STRING)
@@ -36,11 +41,26 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "voucher_id")
+    @JsonIgnore
     private Voucher voucher;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(
+            mappedBy = "order",
+            cascade = CascadeType.ALL
+    )
     private List<OrderItem> items;
 
-    public enum Status { PENDING, CONFIRMED, PREPARING, DELIVERING, COMPLETED, CANCELLED }
-    public enum PaymentMethod { COD, ONLINE }
+    public enum Status {
+        PENDING,
+        CONFIRMED,
+        PREPARING,
+        DELIVERING,
+        COMPLETED,
+        CANCELLED
+    }
+
+    public enum PaymentMethod {
+        COD,
+        ONLINE
+    }
 }

@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import java.math.BigDecimal;
 
 @Data
 @Entity
@@ -16,5 +17,8 @@ public class MemberLevel {
     private String name;
 
     private Integer minPoints = 0;
+
+    private BigDecimal minSpending = BigDecimal.ZERO;
+
     private String benefits;
 }
